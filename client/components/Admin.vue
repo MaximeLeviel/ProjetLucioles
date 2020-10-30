@@ -12,12 +12,13 @@
     </div>
     <div v-else>
         <nav>
-            <button class="btn-top" @click="changeComponent('Maraudes')">Maraudes</button>
-            <button class="btn-top" @click="changeComponent('Doleance')">Doléances</button>
-            <button class="btn-top" @click="changeComponent('Utilisateurs')">Utilisateurs</button>
-            <button class="btn-top" @click="changeComponent('Amdins')">Admins</button>
+            <button class="btn-top"><router-link to='/admin'>Maraudes</router-link></button>
+            <button class="btn-top"><router-link to='/admin/doleances'>Doléances</router-link></button>
+            <button class="btn-top"><router-link to='/admin/utilisateurs'>Utilisateurs</router-link></button>
+            <button class="btn-top"><router-link to='/admin/admins'>Admins</router-link></button>
         </nav>
-        <component :is="dynamicComponent"></component>
+        
+        <router-view></router-view>
     </div>
   </div>
 </template>
@@ -30,7 +31,6 @@ module.exports = {
             email: '',
             password: '',
             isUserConnected: false,
-            dynamicComponent: "/admin/Maraudes.vue"
         }
     },
 
@@ -38,6 +38,7 @@ module.exports = {
         const result = await axios.get('/api/admin/me')
         this.isUserConnected = result.data.admin
         console.log(result.data.admin)
+        this.dynamicComponent = window.httpVueLoader('./admin/Maraudes.vue')
     },
 
     methods: {
@@ -53,10 +54,6 @@ module.exports = {
                 this.isUserConnected = result.data.connected
             }
         },
-
-        changeComponent(componentName){
-            this.dynamicComponent = componentName
-        }
     }
 }
 </script>

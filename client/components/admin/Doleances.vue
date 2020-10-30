@@ -1,6 +1,6 @@
 <template>
   <div>
-      <p>test Maraudes</p>
+      <p>test Doléances</p>
   </div>
 </template>
 
