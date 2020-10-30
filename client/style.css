@@ -1,0 +1,264 @@
+* {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/* --- header --- */
+
+header {
+    border-bottom: 4px solid #C0413B;
+}
+
+/* titre */
+h1 { 
+    color: #C0413B; 
+    font-family: 'Droid serif', serif; 
+    font-size: 50px; 
+    font-weight: 400; 
+    font-style: italic; 
+    line-height: 44px;
+    text-align: center; 
+}
+
+/* bouton accueil et bouton panier*/
+
+a:-webkit-any-link {
+    text-decoration: none;
+    color: #fff;
+    height: 100%;
+}
+
+a:-webkit-any-link:hover {
+    color: #D77B5F;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-top {
+    font-family: Courier New;
+    color: #ffff;
+    font-size: 20px;
+    background: #D77B5F;
+    padding: 10px 20px 10px 20px;
+    margin-right: 20px;
+    border: solid #D77B5F 2px;
+    text-decoration: none;
+}
+  
+.btn-top:hover {
+    background: #fff;
+    text-decoration: none;
+    color: #D77B5F;
+}
+
+
+/* --- dans accueil --- */
+
+/* image de l'article */
+
+article {
+    height: 250px;
+    display: flex;
+    flex: auto;
+}
+
+article img {
+    height: 100%;
+    flex: 1;
+}
+
+.article-img div {
+    height: 628px;
+    flex: 1;
+}
+
+.article-img{
+    min-width: 250px;
+}
+
+.article-img>div{
+    background-position: center;
+}
+
+/* titre de l'article */
+
+h2 {
+    color: #C0413B;
+}
+
+/* description de l'article */
+
+/* bouton supprimer + modifier + ajouter au panier */
+button {
+    font-family: Courier New;
+    color: #fff;
+    font-size: 14px;
+    background: #FF9200;
+    padding: 10px 20px 10px 20px;
+    border: solid #FF9200 2px;
+    text-decoration: none;
+}
+  
+button:hover {
+    background: #fff;
+    text-decoration: none;
+    color: #FF9200;
+    cursor: pointer;
+}
+
+/* --- formulaire en bas de page --- */
+/* nouveau produit à ajouter */
+
+form {
+    max-width: 60%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 4px solid #C0413B;
+    border-width: 100%;
+}
+
+form h2 {
+    text-align: center;
+    color: #C0413B;
+}
+
+/* nom du produit */
+
+.nom-du-produit {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border: 1px solid lightgrey;
+	box-shadow: 1px 1px 4px #C0413B;
+	-moz-box-shadow: 1px 1px 4px #C0413B;
+	-webkit-box-shadow: 1px 1px 4px #C0413B;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+    padding: 7px;
+    margin-bottom: 7px;
+    outline: none;
+    width: 50%;
+}
+
+/* prix */
+
+.prix {
+    box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border: 1px solid lightgrey;
+	box-shadow: 1px 1px 4px #C0413B;
+	-moz-box-shadow: 1px 1px 4px #C0413B;
+	-webkit-box-shadow: 1px 1px 4px #C0413B;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+    padding: 7px;
+    margin-bottom: 10px;
+    outline: none;
+    width: 100px;
+
+    position: absolute;
+    right: 22.4%;
+}
+
+/* description */
+
+.new-description {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border: 1px solid lightgrey;
+	box-shadow: 1px 1px 4px #C0413B;
+	-moz-box-shadow: 1px 1px 4px #C0413B;
+	-webkit-box-shadow: 1px 1px 4px #C0413B;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+    padding: 7px;
+    margin-bottom: 7px;
+    outline: none;
+}
+
+/* lien vers l'image */
+
+.link-img {
+    box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border: 1px solid lightgrey;
+	box-shadow: 1px 1px 4px #C0413B;
+	-moz-box-shadow: 1px 1px 4px #C0413B;
+	-webkit-box-shadow: 1px 1px 4px #C0413B;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+    padding: 7px;
+    margin-bottom: 7px;
+    outline: none;
+    width: 85%;
+}
+
+/* bouton ajouter article */
+
+.add-article {
+    position: absolute;
+    right: 22.4%;
+    width: 100px;
+}
+
+/* --- media queries --- */
+
+@media (max-width: 768px) {
+    * {
+        padding: 5px;
+    }
+
+    .article-img {
+        height: 100px;
+        width: 100px;
+    }
+
+    article {
+        margin-bottom: 20px;
+        height: 300px;
+        display: flex;
+    }
+
+    p {
+        margin-top: 0px;
+    }
+    
+    button {
+        margin-bottom: 15px;
+        margin-right: 0px;
+    }
+
+    h2 {
+        font-size: 38px;
+        margin-top: 0;
+    }
+
+    form {
+        max-width: 90%;
+    }
+
+    .prix {
+        right: 11%;
+    }
+}
+
+@media (min-width: 768px) {
+    button {
+        margin-bottom: 10px;
+    }
+}
