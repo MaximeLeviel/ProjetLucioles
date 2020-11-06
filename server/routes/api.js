@@ -43,6 +43,8 @@ router.get('/emailExist', async (req, res) =>{
   res.json({exist: true})
 })
 
+
+//Start of admin part
 router.get('/admin/me', async (req, res) => {
   if(req.session.admin === true){
     res.json({admin: true})
@@ -51,6 +53,32 @@ router.get('/admin/me', async (req, res) => {
   res.json({admin: false})
 })
 
+router.post('/admin/login', async (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+  const sql = "SELECT * FROM admins WHERE email=$1"
+  const result = await client.query({
+    text: sql,
+    values: [email]
+  })
+
+  if(result.rowCount === 0){
+    res.status(401).json({ message: 'User does not already exist, please register first.'})
+    return
+  }
+
+  if (! await bcrypt.compare(password, result.rows[0].password)){
+    res.status(401).json({message: 'Wrong password'})
+    return
+  }
+
+  req.session.adminId = result.rows[0].id
+  req.session.admin = true
+  
+  res.json({connected: true, message: 'You are now logged in as an admin.'})
+})
+
+//admin management
 router.post('/admin/register', async (req, res) =>{
   if (req.session.admin === true){
     const email = req.body.email
@@ -82,31 +110,6 @@ router.post('/admin/register', async (req, res) =>{
   res.status(400).json({message: "User not connected as an admin."})
 })
 
-router.post('/admin/login', async (req, res) => {
-  const email = req.body.email
-  const password = req.body.password
-  const sql = "SELECT * FROM admins WHERE email=$1"
-  const result = await client.query({
-    text: sql,
-    values: [email]
-  })
-
-  if(result.rowCount === 0){
-    res.status(401).json({ message: 'User does not already exist, please register first.'})
-    return
-  }
-
-  if (! await bcrypt.compare(password, result.rows[0].password)){
-    res.status(401).json({message: 'Wrong password'})
-    return
-  }
-
-  req.session.adminId = result.rows[0].id
-  req.session.admin = true
-  
-  res.json({connected: true, message: 'You are now logged in as an admin.'})
-})
-
 router.delete('/admin/:id', async (req, res) => {
   if (req.session.admin === true){
     const deleteAdmin = req.params.id
@@ -134,4 +137,60 @@ router.get('/admin/admins', async (req, res) =>{
     return
   }
   res.status(400).json({message: "User not connected as an admin."})
+})
+
+//Maraudes management
+router.post('/admin/maraude', async (req, res) =>{
+  if (req.session.admin === true){
+    const jour = req.body.jour
+    const mois = req.body.mois
+    const annee = req.body.annee
+    const heure = req.body.heure
+    const trajet = req.body.trajet
+    const nbParticipants = req.body.nbParticipants
+    const nom = req.body.nom
+    
+    const sql = "INSERT INTO maraudes (jour, mois, annee, heure, type, nombre_participants, nombre_volontaires, nom) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
+    await client.query({
+      text: sql,
+      values: [jour, mois, annee, heure, trajet, nbParticipants, 0, nom]
+    })
+    res.json({message: "Maraude créé."})
+    return
+  }
+  res.status(400).json({message: "User not connected as an admin."})
+})
+
+router.post('/admin/trajet', async (req, res) => {
+  if (req.session.admin === true){    
+    const nom = req.body.nom
+    const depart = req.body.depart
+    const arrivee = req.body.arrivee
+    const trajet = req.body.trajet
+    console.log({trajet: trajet})
+    const sql = "INSERT INTO trajets (nom, depart, arrivee, trajet) VALUES ($1, $2, $3, $4)"
+    await client.query({
+      text: sql,
+      values: [nom, depart, arrivee, trajet]
+    })
+    res.json({message: "Trajet créé."})
+    return
+  }
+  res.status(400).json({message: "User not connected as an admin."})
+})
+
+//End of admin part
+
+router.get('/maraudes', async (req, res) => {
+  const today = new Date()
+  //TODO changer requete pour pas afficher anciennes maraudes
+  const result = await client.query({text: "SELECT * FROM maraudes\nORDER BY annee, mois, jour"})
+  res.json(result.rows)
+  return
+})
+
+router.get('/trajets', async (req, res) => {
+  const result = await client.query({text: "SELECT * FROM trajets"})
+  res.json(result.rows)
+  return
 })

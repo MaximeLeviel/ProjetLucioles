@@ -2,7 +2,7 @@
   <div>
     <li>
       <el v-for="event in events" :key="event" @click="selectMaraude(event)">
-        <router-link to='/test'>
+        <router-link to='/maraudes'>
         <p>{{event.titre}}</p>
         <p>Date: {{event.date}}</p>
         <p>Lieu: {{event.lieu}}</p>

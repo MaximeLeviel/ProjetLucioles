@@ -1,25 +1,21 @@
 <template>
   <div>
-      <p>test Maraudes</p>
+        <nav>
+            <button class="btn-top"><router-link to='/admin/maraudes/maraudes'>Maraudes</router-link></button>
+            <button class="btn-top"><router-link to='/admin/maraudes/trajets'>Trajets</router-link></button>
+        </nav>
+        <router-view></router-view>
   </div>
 </template>
 
 
 <script>
 module.exports = {
-    name: 'Maraudes',
-    data () {
-        return {
-            test: null,
-        }
-    },
-
-
-    methods: {
-        test2(){
-            colsole.log('test')
-        }
+  data (){
+    return{
+      test: null
     }
+  }
 }
 </script>
 

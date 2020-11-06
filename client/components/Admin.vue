@@ -12,7 +12,7 @@
     </div>
     <div v-else>
         <nav>
-            <button class="btn-top"><router-link to='/admin'>Maraudes</router-link></button>
+            <button class="btn-top"><router-link to='/admin/maraudes/maraudes'>Maraudes</router-link></button>
             <button class="btn-top"><router-link to='/admin/doleances'>Doléances</router-link></button>
             <button class="btn-top"><router-link to='/admin/utilisateurs'>Utilisateurs</router-link></button>
             <button class="btn-top"><router-link to='/admin/admins'>Admins</router-link></button>
