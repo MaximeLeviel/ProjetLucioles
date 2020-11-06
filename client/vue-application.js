@@ -18,12 +18,10 @@ const routes = [
     children: [
       {path: 'maraudes', component: AdminMaraudes,
         children: [
-          {path: 'maraudes', component: AdminGestionMaraudes,
-            children:[
-              {path: 'new', component: AdminNouvelleMaraude}
-            ]
-          },
-          {path: 'trajets', component: AdminGestionTrajets}
+          {path: 'maraudes', component: AdminGestionMaraudes},
+          {path: 'new', component: AdminNouvelleMaraude},
+          {path: 'trajets', component: AdminGestionTrajets},
+          {path: 'trajets/new', component: AdminGestionTrajets}
         ]},
       {path: 'doleances', component: AdminDoleances },
       {path: 'utilisateurs', component: AdminUtilisateurs},
@@ -42,8 +40,5 @@ var app = new Vue({
   },
 
   methods: {
-    selectMaraude(maraude){
-      
-    }
   }
 })

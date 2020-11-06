@@ -70,7 +70,7 @@ module.exports = {
             this.trajet = trajet.id
             this.nom = this.trajet.nom
         },
-        creerMaraude(){
+        async creerMaraude(){
             const maraude = {
                 jour: this.selectedDay,
                 mois: this.selectedMonth,
@@ -80,7 +80,8 @@ module.exports = {
                 nbParticipants: this.nbParticipants,
                 nom: this.nom,
             }
-            
+
+            await axios.post('/api/admin/maraude', maraude)
         }
     }
 }

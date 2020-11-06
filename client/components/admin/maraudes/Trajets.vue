@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button class="btn-top"><router-link to='/admin/trajet/new'>Nouveau trajet</router-link></button>
     <div v-for="trajet in trajets" :key="trajet.id" class="trajet">
         <h3>{{trajet.nom}}</h3>
         <p>Départ : {{trajet.depart}}</p>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <li>
-      <el v-for="event in events" :key="event" @click="selectMaraude(event)">
+      <el v-for="event in events" :key="event">
         <router-link to='/maraudes'>
         <p>{{event.titre}}</p>
         <p>Date: {{event.date}}</p>
@@ -40,9 +40,6 @@ module.exports = {
   },
 
   methods: {
-    selectMaraude(event){
-      this.$emit('selection-maraude', event)
-    },
   }
 }
 </script>

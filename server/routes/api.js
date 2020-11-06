@@ -140,7 +140,7 @@ router.get('/admin/admins', async (req, res) =>{
 })
 
 //Maraudes management
-router.post('/admin/maraude', async (req, res) =>{
+router.post('/admin/maraude', async (req, res) => {
   if (req.session.admin === true){
     const jour = req.body.jour
     const mois = req.body.mois
@@ -156,6 +156,77 @@ router.post('/admin/maraude', async (req, res) =>{
       values: [jour, mois, annee, heure, trajet, nbParticipants, 0, nom]
     })
     res.json({message: "Maraude créé."})
+    return
+  }
+  res.status(400).json({message: "User not connected as an admin."})
+})
+
+router.put('/admin/maraude', async (req, res) => {
+  if (req.session.admin === true){
+    var values = []
+    var sql = "UPDATE maraudes\nSET"
+    if (req.req.body.jour !== undefined){
+      const jour = req.body.jour
+      sql += "jour = $" + (values.length + 1)
+      values.push(jour)
+    }
+    if (req.req.body.mois !== undefined){
+      const mois = req.body.mois
+      if (values.length !== 0){
+        sql += ","
+      }
+      sql += "mois = $" + (values.length + 1)
+      values.push(mois)
+    }
+    if (req.req.body.annee !== undefined){
+      const annee = req.body.annee
+      if (values.length !== 0){
+        sql += ","
+      }
+      sql += "annee = $" + (values.length + 1)
+      values.push(annee)
+    }
+    if (req.req.body.heure !== undefined){
+      const heure = req.body.heure
+      if (values.length !== 0){
+        sql += ","
+      }
+      sql += "heure = $" + (values.length + 1)
+      values.push(heure)
+    }
+    if (req.req.body.trajet !== undefined){
+      const trajet = req.body.trajet
+      if (values.length !== 0){
+        sql += ","
+      }
+      sql += "type = $" + (values.length + 1)
+      values.push(trajet)
+    }
+    if (req.req.body.nbParticipants !== undefined){
+      const nbParticipants = req.body.nbParticipants
+      if (values.length !== 0){
+        sql += ","
+      }
+      sql += "nombre_participants = $" + (values.length + 1)
+      values.push(nbParticipants)
+    }
+
+    if (req.req.body.nom !== undefined){
+      const nom = req.body.nom
+      if (values.length !== 0){
+        sql += ","
+      }
+      sql += "nom = $" + (values.length + 1)
+      values.push(nom)
+    }
+
+    sql += "WHERE id = " + req.body.id
+    
+    await client.query({
+      text: sql,
+      values: values
+    })
+    res.json({message: "Maraude modifiée."})
     return
   }
   res.status(400).json({message: "User not connected as an admin."})
