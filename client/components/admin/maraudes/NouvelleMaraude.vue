@@ -12,7 +12,7 @@
                 <option v-for="jour in jours" :key="jour">{{jour}}</option>
             </select>
             <select @change="changeTrajet(trajet)">
-                <option v-for="(trajet, index) in trajets" :key="trajet.id">{{index+1}}.{{trajet.nom}} </option>
+                <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom}} </option>
             </select>
             <input type="text" v-model="nom" placeholder="Nom de la maraude" required>
             <input type="text" v-model="nbParticipants" placeholder="Nombre de participants" required>
@@ -67,7 +67,7 @@ module.exports = {
     
     methods: {
         changeTrajet(trajet){
-            this.trajet = trajet.id
+            this.trajet = trajet.trajet_id
             this.nom = this.trajet.nom
         },
         async creerMaraude(){
@@ -76,7 +76,7 @@ module.exports = {
                 mois: this.selectedMonth,
                 annee: this.selectedYear,
                 heure: this.heures + ':' + this.minutes,
-                trajet: this.trajet.id,
+                trajet: this.trajet.trajet_id,
                 nbParticipants: this.nbParticipants,
                 nom: this.nom,
             }

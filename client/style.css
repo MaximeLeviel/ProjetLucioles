@@ -26,12 +26,8 @@ h1 {
 
 a:-webkit-any-link {
     text-decoration: none;
-    color: #fff;
+    color: black;
     height: 100%;
-}
-
-a:-webkit-any-link:hover {
-    color: #D77B5F;
 }
 
 nav {

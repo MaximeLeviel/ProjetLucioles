@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div v-for="maraude in maraudes" :key="maraude.id" class="maraude">
+    <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
         <h3>{{maraude.nom}}</h3>
         <p>Date : {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} {{maraude.heure}} </p>
         <p>Participants : {{maraude.nombre_volontaires}}/{{maraude.nombre_participants}} </p>
+        <p class="delete" @click="deleteMaraude(maraude)">🥨</p>
     </div>
   </div>
 </template>
@@ -22,7 +23,12 @@ module.exports = {
         this.maraudes = result.data
     },
 
-    method:{
+    methods: {
+        async deleteMaraude(maraude){
+            var result = await axios.delete('/api/admin/maraude/' + maraude.maraude_id)
+            result = await axios.get('/api/maraudes')
+            this.maraudes = result.data
+        },
     }
 }
 </script>
@@ -32,5 +38,9 @@ module.exports = {
     background-color: rgb(248, 248, 248);
     margin: 2px;
     border-radius: 10px;
+}
+
+.delete:hover{
+    cursor: pointer;
 }
 </style>

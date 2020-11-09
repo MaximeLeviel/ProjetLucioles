@@ -150,10 +150,10 @@ router.post('/admin/maraude', async (req, res) => {
     const nbParticipants = req.body.nbParticipants
     const nom = req.body.nom
     
-    const sql = "INSERT INTO maraudes (jour, mois, annee, heure, type, nombre_participants, nombre_volontaires, nom) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
+    const sql = "INSERT INTO maraudes (jour, mois, annee, heure, type, nombre_participants, nombre_volontaires, nom, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)"
     await client.query({
       text: sql,
-      values: [jour, mois, annee, heure, trajet, nbParticipants, 0, nom]
+      values: [jour, mois, annee, heure, trajet, nbParticipants, 0, nom, "{}"]
     })
     res.json({message: "Maraude créé."})
     return
@@ -164,21 +164,23 @@ router.post('/admin/maraude', async (req, res) => {
 router.put('/admin/maraude', async (req, res) => {
   if (req.session.admin === true){
     var values = []
-    var sql = "UPDATE maraudes\nSET"
-    if (req.req.body.jour !== undefined){
+    var sql = "UPDATE maraudes\nSET "
+    if (req.body.jour !== undefined){
       const jour = req.body.jour
       sql += "jour = $" + (values.length + 1)
       values.push(jour)
     }
-    if (req.req.body.mois !== undefined){
+    if (req.body.mois !== undefined){
+      console.log("test1")
       const mois = req.body.mois
       if (values.length !== 0){
         sql += ","
       }
       sql += "mois = $" + (values.length + 1)
       values.push(mois)
+      console.log("test2")
     }
-    if (req.req.body.annee !== undefined){
+    if (req.body.annee !== undefined){
       const annee = req.body.annee
       if (values.length !== 0){
         sql += ","
@@ -186,7 +188,7 @@ router.put('/admin/maraude', async (req, res) => {
       sql += "annee = $" + (values.length + 1)
       values.push(annee)
     }
-    if (req.req.body.heure !== undefined){
+    if (req.body.heure !== undefined){
       const heure = req.body.heure
       if (values.length !== 0){
         sql += ","
@@ -194,7 +196,7 @@ router.put('/admin/maraude', async (req, res) => {
       sql += "heure = $" + (values.length + 1)
       values.push(heure)
     }
-    if (req.req.body.trajet !== undefined){
+    if (req.body.trajet !== undefined){
       const trajet = req.body.trajet
       if (values.length !== 0){
         sql += ","
@@ -202,16 +204,16 @@ router.put('/admin/maraude', async (req, res) => {
       sql += "type = $" + (values.length + 1)
       values.push(trajet)
     }
-    if (req.req.body.nbParticipants !== undefined){
+    if (req.body.nbParticipants !== undefined){
       const nbParticipants = req.body.nbParticipants
       if (values.length !== 0){
-        sql += ","
+        sql += ", "
       }
       sql += "nombre_participants = $" + (values.length + 1)
       values.push(nbParticipants)
     }
 
-    if (req.req.body.nom !== undefined){
+    if (req.body.nom !== undefined){
       const nom = req.body.nom
       if (values.length !== 0){
         sql += ","
@@ -219,14 +221,37 @@ router.put('/admin/maraude', async (req, res) => {
       sql += "nom = $" + (values.length + 1)
       values.push(nom)
     }
-
-    sql += "WHERE id = " + req.body.id
     
+    console.log("test3")
+
+    sql += " WHERE id = " + req.body.maraude_id
+    
+    console.log("test4")
+    console.log(sql)
+    console.log(values)
+
     await client.query({
       text: sql,
       values: values
     })
+    
+    console.log("test5")
     res.json({message: "Maraude modifiée."})
+    return
+  }
+  res.status(400).json({message: "User not connected as an admin."})
+})
+
+router.delete('/admin/maraude/:id', async (req, res) => {
+  if (req.session.admin === true){
+    const deleteMaraude = req.params.id
+    const sql = "DELETE FROM maraudes WHERE id=$1"
+    var result = await client.query({
+      text: sql,
+      values: [deleteMaraude]
+    })
+    
+    res.json({message: "Maraude supprimée."})
     return
   }
   res.status(400).json({message: "User not connected as an admin."})
@@ -260,8 +285,94 @@ router.get('/maraudes', async (req, res) => {
   return
 })
 
+router.get('/maraudesTrajets', async(req, res) => {
+  const result = await client.query({text: "SELECT * FROM maraudes\nINNER JOIN trajets ON maraudes.type=trajets.trajet_id\nORDER BY maraudes.annee, maraudes.mois, maraudes.jour"})
+  res.json(result.rows)
+  console.log(result.rows)
+})
+
+router.get('/maraude/:id', async (req,res) => {
+  const sql = "SELECT *\nFROM maraudes\nINNER JOIN trajets ON maraudes.type=trajets.trajet_id AND maraudes.maraude_id=$1"
+  const maraudeId = req.params.id
+  console.log(sql)
+  console.log(maraudeId)
+  const result = await client.query({
+    text: sql,
+    values: [maraudeId]
+  })
+  console.log(result)
+  res.json(result.rows)
+})
+
 router.get('/trajets', async (req, res) => {
   const result = await client.query({text: "SELECT * FROM trajets"})
   res.json(result.rows)
   return
 })
+
+router.post('/email', async (req, res) => {
+  const email = req.body.email
+  const participantID = await getIdParticipant(email)
+  if(participantID === false){
+    res.json({connu: false})
+    return
+  }
+
+  const maraudeId = req.body.id
+  var sql = "UPDATE participants SET nombre_participations = nombre_participations + 1, participations = array_append(participations, $1) WHERE email = $2"
+  await client.query({
+    text: sql,
+    values: [maraudeId, email]
+  })
+  await inscriptionMaraude(participantID, maraudeId)
+  res.json({message: "Participant inscrit."})
+})
+
+router.post('/participant', async (req, res) => {
+  const email = req.body.email
+  var sql = "SELECT id FROM participants WHERE email = $1"
+  var result = await client.query({
+    text: sql,
+    values: [email]
+  })
+  if(result.rowCount !== 0){
+    res.json({message: "L'adresse mail est déjà utilisée."})
+    return
+  }
+  const nom = req.body.nom
+  const prenom = req.body.prenom
+  const telephone = req.body.phone
+  const maraudeId = req.body.id
+  console.log(typeof maraudeId)
+  sql = "INSERT INTO participants (nom, prenom, email, telephone, participations, nombre_participations) VALUES ($1, $2, $3, $4, $5, $6)"
+  await client.query({
+    text: sql,
+    values: [nom, prenom, email, telephone, "{"+maraudeId+"}", 1]
+  })
+  console.log("done")
+  const participantID = await getIdParticipant(email)
+  await inscriptionMaraude(participantID, maraudeId)
+  res.json({message: "Participant enregistré et inscrit"})
+})
+
+async function inscriptionMaraude(participantId, maraudeId){
+  console.log(participantId)
+  const sql = "UPDATE maraudes SET nombre_volontaires = nombre_volontaires + 1, participants = array_append(participants, $1) WHERE maraude_id = $2"
+  const result = await client.query({
+    text: sql,
+    values: [participantId, maraudeId]
+  })
+  return result
+}
+
+async function getIdParticipant(email){
+  const sql = "SELECT id FROM participants WHERE email = $1"
+  const result = await client.query({
+    text: sql,
+    values: [email]
+  })
+  if (result.rowCount === 0){
+    return false
+  }
+  return result.rows[0].id
+}
