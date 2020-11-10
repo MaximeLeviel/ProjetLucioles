@@ -314,7 +314,7 @@ router.post('/email', async (req, res) => {
   const email = req.body.email
   const participantID = await getIdParticipant(email)
   if(participantID === false){
-    res.json({connu: false})
+    res.json({connu: false, message: "Participant non inscrit."})
     return
   }
 
@@ -325,7 +325,7 @@ router.post('/email', async (req, res) => {
     values: [maraudeId, email]
   })
   await inscriptionMaraude(participantID, maraudeId)
-  res.json({message: "Participant inscrit."})
+  res.json({connu: false, message: "Participant inscrit."})
 })
 
 router.post('/participant', async (req, res) => {
