@@ -224,7 +224,7 @@ router.put('/admin/maraude', async (req, res) => {
     
     console.log("test3")
 
-    sql += " WHERE id = " + req.body.maraude_id
+    sql += " WHERE maraude_id = " + req.body.maraude_id
     
     console.log("test4")
     console.log(sql)
@@ -245,7 +245,7 @@ router.put('/admin/maraude', async (req, res) => {
 router.delete('/admin/maraude/:id', async (req, res) => {
   if (req.session.admin === true){
     const deleteMaraude = req.params.id
-    const sql = "DELETE FROM maraudes WHERE id=$1"
+    const sql = "DELETE FROM maraudes WHERE maraude_id=$1"
     var result = await client.query({
       text: sql,
       values: [deleteMaraude]
