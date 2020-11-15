@@ -39,7 +39,6 @@ module.exports = {
             selectedMonth: '',
             selectedDay: '',
             nbParticipants: '',
-            password: '',
             trajets: null,
             trajet: null,
             heures: '19',

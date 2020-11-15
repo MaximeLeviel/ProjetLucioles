@@ -139,6 +139,44 @@ router.get('/admin/admins', async (req, res) =>{
   res.status(400).json({message: "User not connected as an admin."})
 })
 
+router.get('/admin/users', async (req, res) =>{
+  if (req.session.admin === true){
+    var result = await client.query({text: "SELECT * FROM participants"})
+    var data = result.rows
+    console.log(result)
+    console.log(data)
+    for (var i = 0; i < data.length; i++){
+      data[i].maraudes = []
+      const sql = "SELECT nom, jour, mois, annee FROM maraudes WHERE maraude_id=$1"
+      for (var j = 0; j < data[i].participations.length; j++){
+        console.log(data[i].participations[j])
+        result = await client.query({
+          text: sql,
+          values: [data[i].participations[j]],
+        })
+        console.log(result)
+        data[i].maraudes.push(result.rows[0])
+      }
+    }
+    res.json(data)
+    return
+  }
+  res.status(400).json({message: "User not connected as an admin."})
+})
+
+router.delete('/admin/user/:id', async (req, res) => {
+  if (req.session.admin === true){
+    const id = req.params.id
+    const sql = "DELETE FROM participants WHERE id=$1"
+    await client.query({
+      text: sql,
+      values: [id],
+    })
+    res.json({message: "Utilisateur supprimé."})
+  }
+  res.status(400).json({message: "User not connected as an admin."})
+})
+
 //Maraudes management
 router.post('/admin/maraude', async (req, res) => {
   if (req.session.admin === true){
@@ -264,7 +302,7 @@ router.post('/admin/trajet', async (req, res) => {
     const arrivee = req.body.arrivee
     const trajet = req.body.trajet
     console.log({trajet: trajet})
-    const sql = "INSERT INTO trajets (nom, depart, arrivee, trajet) VALUES ($1, $2, $3, $4)"
+    const sql = "INSERT INTO trajets (nom_trajet, depart, arrivee, trajet) VALUES ($1, $2, $3, $4)"
     await client.query({
       text: sql,
       values: [nom, depart, arrivee, trajet]

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="trajet in trajets" :key="trajet.trajet_id" class="trajet">
-        <h3>{{trajet.nom}}</h3>
+        <h3>{{trajet.nom_trajet}}</h3>
         <p>Départ : {{trajet.depart}}</p>
         <p>Arrivée : {{trajet.arrivee}}</p>
     </div>
