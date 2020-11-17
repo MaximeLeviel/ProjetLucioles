@@ -7,8 +7,8 @@ const { Client } = require('pg')
 const client = new Client({
   user: 'postgres',
   host: 'localhost',
-  password: 'bonzoir',
-  database: 'projetLucioles'
+  password: 'WebTeam',
+  database: 'projetLuciole'
 })
 
 client.connect()
@@ -363,7 +363,7 @@ router.post('/email', async (req, res) => {
     values: [maraudeId, email]
   })
   await inscriptionMaraude(participantID, maraudeId)
-  res.json({connu: false, message: "Participant inscrit."})
+  res.json({connu: true, message: "Participant inscrit."})
 })
 
 router.post('/participant', async (req, res) => {

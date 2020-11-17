@@ -92,5 +92,6 @@ h3 {
     text-align: center;
     text-transform: uppercase;
     font-size: 24px;
+    font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
 }
 </style>

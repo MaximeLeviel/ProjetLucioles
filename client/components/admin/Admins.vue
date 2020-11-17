@@ -101,11 +101,23 @@ form {
     margin: auto;
     text-align: center;
     margin-bottom: 20px;
+    padding: 20px;
+}
+
+.admin p #id {
+    text-decoration: bold;
+}
+
+.cross {
+    color: grey;
 }
 
 .cross:hover{
     cursor: pointer;
-    transform: scale(1.2);
-    transition-duration: 0.5s;
+    text-decoration: underline;
+}
+
+.id {
+    text-decoration: bold;
 }
 </style>

@@ -27,7 +27,7 @@ nav {
 }
 
 .navbar-maraudes {
-  background-color: #2c353d;
+  background-color: #5e9edb;
   width: 100%;
   height: 50px;
   bottom: 0;
@@ -36,7 +36,7 @@ nav {
 }
 
 .navbar-maraudes a {
-  color:lightgrey;
+  color:#fff;
   margin: 10px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -45,6 +45,6 @@ nav {
 }
 
 .navbar-maraudes a:hover {
-  color: #fff;
+  color: lightgrey;
 }
 </style>

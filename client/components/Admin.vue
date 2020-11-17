@@ -59,7 +59,7 @@ module.exports = {
 <style scoped>
 
 .navbar-admin {
-    background-color: #2c353d;
+    background-color: #005a87;
     width: 100%;
     height: 50px;
     bottom: 0;

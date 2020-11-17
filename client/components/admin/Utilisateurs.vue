@@ -66,12 +66,12 @@ module.exports = {
 
 .delete {
     text-align: center;
+    color: grey;
 }
 
 .delete:hover{
     cursor: pointer;
-    transform: scale(1.1);
-    transition: 0.4s;
+    text-decoration: underline;
 }
 
 h2 {
