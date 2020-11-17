@@ -147,7 +147,7 @@ router.get('/admin/users', async (req, res) =>{
     console.log(data)
     for (var i = 0; i < data.length; i++){
       data[i].maraudes = []
-      const sql = "SELECT nom, jour, mois, annee FROM maraudes WHERE maraude_id=$1"
+      const sql = "SELECT nom, jour, mois, annee, maraude_id FROM maraudes WHERE maraude_id=$1"
       for (var j = 0; j < data[i].participations.length; j++){
         console.log(data[i].participations[j])
         result = await client.query({

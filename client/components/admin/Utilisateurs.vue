@@ -9,7 +9,7 @@
         <p><span>Nombre de participations :</span> {{user.nombre_participations}}</p>
         <p><span>Participations :</span></p>
         <ul>
-            <li v-for="(maraude, index) in user.maraudes" :key="index">{{maraude.nom}} du {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} </li>
+            <li v-for="maraude in userMaraude(user)" :key="maraude.maraude_id">{{maraude.nom}} du {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} </li>
         </ul>
         <p class="delete" @click="deleteUser(user)">Supprimer l'utilisateur</p>
     </div>
@@ -36,6 +36,10 @@ module.exports = {
             result = await axios.get('/api/admin/users')
             this.users = result.data
         },
+
+        userMaraude(user){
+            return user.maraude
+        }
     }
 }
 </script>
