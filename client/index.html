@@ -1,32 +1,67 @@
 <!doctype html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>La Balade des Lucioles</title>
-        <link rel="stylesheet" href="style.css"/>
-        <!-- Load Vue followed by Vue Router -->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/http-vue-loader/src/httpVueLoader.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    </head>
-    <body>
-        <div id="app">
-          <header>
-            <h1>La balade des lucioles</h1>
+  <head>
+    <meta charset="utf-8">
+    <title>La Balade des Lucioles</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://kit.fontawesome.com/e6d58530a8.js" crossorigin="chloe-romy"></script>
+    <!-- Load Vue followed by Vue Router -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/http-vue-loader/src/httpVueLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
 
-            <nav>
-              <button class="btn-top"><router-link to='/'>Accueil</router-link></button>
-              <button class="btn-top"><router-link to='/maraudes'>Maraudes</router-link></button>
-              <button class="btn-top"><router-link to='/doleances'>Doléances</router-link></button>
-              <button class="btn-top"><router-link to='/admin/maraudes/maraudes'>Admin</router-link></button>
-            </nav>
+  <body>
+    <div id="app">
+      <header>
 
-          </header>
-          <main>
-            <router-view></router-view>
-          </main>
-        </div>
-        <script src="/vue-application.js"></script>
-    </body>
+          <div id="top">
+
+            <div id="logo">
+              <div class="image"></div>
+            </div>
+  
+            <div id="reseaux-sociaux">
+              <div class="center">
+                <a href="https://www.facebook.com/baladedeslucioles/" target=_blank><i class="fa fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/labaladedeslucioles/" target=_blank><i class="fa fa-instagram"></i></a>
+                <a href="https://twitter.com/baladelucioles" target=_blank><i class="fa fa-twitter"></i></a>
+                <a href="https://www.youtube.com/channel/UCgCxbNiDb5mWb9j_-aaET2Q" target=_blank><i class="fa fa-youtube"></i></a>
+              </div>
+            </div>
+
+          </div>
+          
+          <div id="bottom">
+
+            <div id="navbar">
+              <div id="menu">
+                <nav>
+                  <a><router-link to='/'>Accueil</router-link></a>
+                  <a><router-link to='/maraudes'>Maraudes</router-link></a>
+                  <a><router-link to='/doleances'>Doléances</router-link></a>
+                  <a><router-link to='/admin/maraudes/maraudes'>Admin</router-link></a>
+                </nav>
+              </div>
+            </div>
+
+          </div>
+
+      </header>
+          
+      
+      <main>
+        <router-view></router-view>
+      </main>
+
+      <div id="footer">
+        <iframe id="footer" src="footer.html" seamless scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <script src="/vue-application.js"></script>
+    
+  </body>
+
 </html>

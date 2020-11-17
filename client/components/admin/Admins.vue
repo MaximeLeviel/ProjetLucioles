@@ -2,17 +2,18 @@
   <div>
       <div> 
         <h2>Ajouter un administrateur</h2>
+        <hr>
         <form @submit.prevent="ajouterAdmin">
-            <input type="text" v-model="email" placeholder="Entrez votre adresse mail" required>
-            <input type="text" v-model="password" placeholder="Entrez votre mot de passe" required>
+            <input type="text" v-model="email" placeholder="Entrez l'adresse mail" required>
+            <input type="text" v-model="password" placeholder="Entrez le mot de passe" required>
 
             <button type="submit">Ajouter</button>
         </form>
       </div>
         <div v-for="administrateur in administrateurs" :key="administrateur.id" class="admin">
-            <p>{{administrateur.id}}</p>
-            <p>{{administrateur.email}}</p>
-            <p v-if="administrateur.id !== currentAdmin" class="cross" @click="deleteAdmin(administrateur)">🥨</p>
+            <p id="id">{{administrateur.id}}</p>
+            <p id="email">{{administrateur.email}}</p>
+            <p v-if="administrateur.id !== currentAdmin" class="cross" @click="deleteAdmin(administrateur)">Supprimer l'administrateur</p>
         </div>
   </div>
 </template>
@@ -61,16 +62,50 @@ module.exports = {
 </script>
 
 <style scoped>
-.admin{
-    border: solid 1px black;
-    margin: 5px
+h2 {
+  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  line-height: 1.1em;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
 }
 
-.admin>p{
-    display: inline-block;
+hr {
+  display: block;
+  border: 0;
+  border-radius: 3em;
+  border-top: 2px solid orange;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 10%;
+  margin: auto;
+}
+
+form {
+    margin-bottom: 15px;
+}
+
+.admin {
+    border: solid 2px black;
+    border-radius: 10px;
+    width: 30%;
+    background-color: #fff;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .cross:hover{
     cursor: pointer;
+    transform: scale(1.2);
+    transition-duration: 0.5s;
 }
 </style>

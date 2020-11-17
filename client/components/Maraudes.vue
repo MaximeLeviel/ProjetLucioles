@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
         <router-link :to="chemin(maraude)">
             <h3>{{maraude.nom}}</h3>
@@ -43,11 +43,19 @@ module.exports = {
 </script>
 
 <style scoped>
+
 .maraude{
-    background-color: rgb(248, 248, 248);
-    margin: 2px;
-    border-radius: 10px;
-    color: black;
+  background-color: #fff;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 70%;
+  border-radius: 10px;
+  color: black;
+}
+
+.maraude p {
+  text-decoration: none;
 }
 
 article {

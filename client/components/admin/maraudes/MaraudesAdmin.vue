@@ -1,10 +1,13 @@
 <template>
   <div>
+      <h2>Maraudes</h2>
+      <hr>
+
     <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
         <h3>{{maraude.nom}}</h3>
         <p>Date : {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} {{maraude.heure}} </p>
         <p>Participants : {{maraude.nombre_volontaires}}/{{maraude.nombre_participants}} </p>
-        <p class="delete" @click="deleteMaraude(maraude)">🥨</p>
+        <p class="delete" @click="deleteMaraude(maraude)">Supprimer cette maraude</p>
     </div>
   </div>
 </template>
@@ -35,12 +38,59 @@ module.exports = {
 
 <style scoped>
 .maraude{
+    width: 40%;
     background-color: rgb(248, 248, 248);
-    margin: 2px;
     border-radius: 10px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.maraude:last-child {
+    margin-bottom: 30px;
+}
+
+.delete {
+    text-align: center;
+    color: grey;
 }
 
 .delete:hover{
     cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.4s;
+}
+
+h2 {
+  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  line-height: 1.1em;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+hr {
+  display: block;
+  border: 0;
+  border-radius: 3em;
+  border-top: 2px solid orange;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 10%;
+  margin: auto;
+}
+
+h3 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 24px;
 }
 </style>

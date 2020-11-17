@@ -1,8 +1,9 @@
 <template>
   <div>
         <h2>Nouvelle Maraude</h2>
+        <hr>
         <form @submit.prevent="creerMaraude">
-            <select v-model="selectedYear">
+            <select v-model="selectedYear" class="date">
                 <option v-for="annee in annees" :key="annee">{{annee}}</option>
             </select>
             <select v-model="selectedMonth">
@@ -11,15 +12,16 @@
             <select v-model="selectedDay">
                 <option v-for="jour in jours" :key="jour">{{jour}}</option>
             </select>
+
             <select @change="changeTrajet(trajet)">
                 <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom}} </option>
             </select>
-            <input type="text" v-model="nom" placeholder="Nom de la maraude" required>
+            <input type="text" class="first" v-model="nom" placeholder="Nom de la maraude" required>
             <input type="text" v-model="nbParticipants" placeholder="Nombre de participants" required>
             <div class="heure">
-                <input type="text" v-model="heures" required>
+                <input type="text" class="heure-heure" v-model="heures" placeholder="Heure" required>
                 <p>h</p>
-                <input type="text" v-model="minutes" required>
+                <input type="text" class="heure-minute" v-model="minutes" placeholder="Minute" required>
             </div>
 
             <button type="submit">Valider</button>
@@ -89,6 +91,50 @@ module.exports = {
 <style scoped>
 .heure>*{
     display: inline-block;
-    max-width: 20px;
+    color: grey;
 }
+
+.heure-heure {
+    width: 47%;
+}
+
+.heure-minute {
+    width: 47%;
+}
+
+h2 {
+  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  line-height: 1.1em;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+hr {
+  display: block;
+  border: 0;
+  border-radius: 3em;
+  border-top: 2px solid orange;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 10%;
+  margin: auto;
+}
+
+form {
+    margin-bottom: 30px;
+}
+
+.first {
+    margin-top: 20px;
+}
+
 </style>

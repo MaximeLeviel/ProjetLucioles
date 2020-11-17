@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <div v-if="!isUserConnected"> 
-        <h2>Log in</h2>
-        <form @submit.prevent="loginUser">
-            <h3>Log into your account</h3>
-            <input type="text" v-model="email" placeholder="Enter your email adress" required>
-            <input type="text" v-model="password" placeholder="Enter your password" required>
+    <div class="site-container">
+        <div v-if="!isUserConnected"> 
+            <form @submit.prevent="loginUser">
+                <h3>Connexion</h3>
+                <input type="text" v-model="email" placeholder="Email" required>
+                <input type="text" v-model="password" placeholder="Mot de passe" required>
 
-            <button type="submit">Log in</button>
-        </form>
-    </div>
-    <div v-else>
-        <nav>
-            <button class="btn-top"><router-link to='/admin/maraudes/maraudes'>Maraudes</router-link></button>
-            <button class="btn-top"><router-link to='/admin/doleances'>Doléances</router-link></button>
-            <button class="btn-top"><router-link to='/admin/utilisateurs'>Utilisateurs</router-link></button>
-            <button class="btn-top"><router-link to='/admin/admins'>Admins</router-link></button>
-        </nav>
-        
+                <button type="submit">Connexion</button>
+            </form>
+        </div>
+        <div v-else>
+            <nav class="navbar-admin">
+                <a><router-link to='/admin/maraudes/maraudes'>Maraudes</router-link></a>
+                <a><router-link to='/admin/doleances'>Doléances</router-link></a>
+                <a><router-link to='/admin/utilisateurs'>Utilisateurs</router-link></a>
+                <a><router-link to='/admin/admins'>Admins</router-link></a>
+            </nav>
+        </div>
         <router-view></router-view>
     </div>
-  </div>
 </template>
 
 
@@ -59,4 +57,30 @@ module.exports = {
 </script>
 
 <style scoped>
+
+.navbar-admin {
+    background-color: #2c353d;
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    text-align: center;
+    overflow: hidden;
+    position: fixed;
+    position: sticky;
+    padding-top: 10px;
+}
+
+
+a {
+    color:lightgrey;
+    margin: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff;
+}
 </style>
