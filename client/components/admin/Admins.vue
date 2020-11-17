@@ -1,19 +1,24 @@
 <template>
   <div>
-      <div> 
-        <h2>Ajouter un administrateur</h2>
-        <hr>
-        <form @submit.prevent="ajouterAdmin">
-            <input type="text" v-model="email" placeholder="Entrez l'adresse mail" required>
-            <input type="text" v-model="password" placeholder="Entrez le mot de passe" required>
+        <div> 
+            <h2>Ajouter un administrateur</h2>
+            <hr>
+            <form @submit.prevent="ajouterAdmin">
+                <input type="text" v-model="email" placeholder="Entrez l'adresse mail" required>
+                <input type="text" v-model="password" placeholder="Entrez le mot de passe" required>
 
-            <button type="submit">Ajouter</button>
-        </form>
-      </div>
-        <div v-for="administrateur in administrateurs" :key="administrateur.id" class="admin">
-            <p id="id">{{administrateur.id}}</p>
-            <p id="email">{{administrateur.email}}</p>
-            <p v-if="administrateur.id !== currentAdmin" class="cross" @click="deleteAdmin(administrateur)">Supprimer l'administrateur</p>
+                <button type="submit">Ajouter</button>
+            </form>
+        </div>
+
+        <div>
+            <h2>Liste des administrateurs</h2>
+            <hr>
+            <div v-for="administrateur in administrateurs" :key="administrateur.id" class="admin">
+                <p id="id">{{administrateur.id}}</p>
+                <p id="email">{{administrateur.email}}</p>
+                <p v-if="administrateur.id !== currentAdmin" class="cross" @click="deleteAdmin(administrateur)">Supprimer l'administrateur</p>
+            </div>
         </div>
   </div>
 </template>
@@ -100,8 +105,12 @@ form {
     background-color: #fff;
     margin: auto;
     text-align: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
     padding: 20px;
+}
+
+.admin:last-child {
+    margin-bottom: 20px;
 }
 
 .admin p #id {
