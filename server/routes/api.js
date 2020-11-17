@@ -355,9 +355,25 @@ router.post('/email', async (req, res) => {
     res.json({connu: false, message: "Participant non inscrit."})
     return
   }
+  var sql = "SELECT participations FROM participants WHERE id=$1"
+  const result = await client.query({
+    text: sql,
+    values: [participantID]
+  })
+  console.log({result: result.rows[0].participations})
 
   const maraudeId = req.body.id
-  var sql = "UPDATE participants SET nombre_participations = nombre_participations + 1, participations = array_append(participations, $1) WHERE email = $2"
+
+  console.log(maraudeId)
+
+  for(var i = 0; i < result.rows[0].participations.length; i++){
+    if(result.rows[0].participations[i] == maraudeId){
+      res.json({connu: true, message: "Participant déja inscrit."})
+      return
+    }
+  }
+
+  sql = "UPDATE participants SET nombre_participations = nombre_participations + 1, participations = array_append(participations, $1) WHERE email = $2"
   await client.query({
     text: sql,
     values: [maraudeId, email]

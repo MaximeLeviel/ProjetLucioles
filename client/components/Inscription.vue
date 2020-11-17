@@ -56,7 +56,7 @@ module.exports = {
     async verifierEmail(){
       const inscription = {
         email: this.email,
-        id: this.maraude.id
+        id: this.maraude.maraude_id
       }
       const result = await axios.post('/api/email', inscription)
       if (result.data.connu === false){
