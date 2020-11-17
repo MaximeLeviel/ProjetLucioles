@@ -13,7 +13,7 @@
                 <select v-model="selectedDay" class="date">
                     <option v-for="jour in jours" :key="jour">{{jour}}</option>
                 </select>
-                <select @change="changeTrajet(trajet)">
+                <select @change="changeTrajet(trajet)" class="date">
                     <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom}} </option>
                 </select>
             </div>
@@ -92,15 +92,6 @@ module.exports = {
 
 <style scoped>
 
-.select-date {
-    width: 75%;
-    margin: auto;
-}
-
-select {
-    width: 22%;
-}
-
 input {
     font-size: 20px;
 }
@@ -116,6 +107,7 @@ input {
 .heure-minute {
     width: 47%;
 }
+
 
 h2 {
   font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
@@ -152,4 +144,18 @@ form {
     margin-top: 20px;
 }
 
+.select-date {
+    margin: auto;
+}
+
+.date {
+    width: 100px;
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 18px;
+    color: #1c87c9;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 4px 4px #ccc;
+}
 </style>

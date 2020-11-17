@@ -4,7 +4,7 @@
       <hr>
 
     <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
-        <h3>{{maraude.nom}}</h3>
+        <h3><span>{{maraude.nom}}</span></h3>
         <p>Date : {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} {{maraude.heure}} </p>
         <p>Participants : {{maraude.nombre_volontaires}}/{{maraude.nombre_participants}} </p>
         <p class="delete" @click="deleteMaraude(maraude)">Supprimer cette maraude</p>
@@ -88,10 +88,22 @@ hr {
   margin: auto;
 }
 
-h3 {
-    text-align: center;
+h3 { 
+    color: #33383b; 
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 30px; 
+    font-weight: 300; 
+    line-height: 0.1em;
+    margin: 30px 0 30px;
+    text-align: center; 
     text-transform: uppercase;
-    font-size: 24px;
-    font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+
+    width: 100%;
+    border-bottom: 2px solid orange; 
+}
+ 
+h3 span { 
+    background: rgb(248, 248, 248); 
+    padding:0 10px; 
 }
 </style>

@@ -3,7 +3,7 @@
       <h2>Trajets</h2>
       <hr>
     <div v-for="trajet in trajets" :key="trajet.trajet_id" class="trajet">
-        <h3>{{trajet.nom_trajet}}</h3>
+        <h3><span>{{trajet.nom_trajet}}</span></h3>
         <p>Départ : {{trajet.depart}}</p>
         <p>Arrivée : {{trajet.arrivee}}</p>
         <p>Trajet :</p>
@@ -73,9 +73,22 @@ hr {
   margin: auto;
 }
 
-h3 {
-    text-align: center;
+h3 { 
+    color: #33383b; 
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 30px; 
+    font-weight: 300; 
+    line-height: 0.1em;
+    margin: 30px 0 30px;
+    text-align: center; 
     text-transform: uppercase;
-    font-size: 24px;
+
+    width: 100%;
+    border-bottom: 2px solid orange; 
+}
+ 
+h3 span { 
+    background: rgb(248, 248, 248); 
+    padding:0 10px; 
 }
 </style>
