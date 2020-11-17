@@ -3,19 +3,21 @@
         <h2>Nouvelle Maraude</h2>
         <hr>
         <form @submit.prevent="creerMaraude">
-            <select v-model="selectedYear" class="date">
-                <option v-for="annee in annees" :key="annee">{{annee}}</option>
-            </select>
-            <select v-model="selectedMonth">
-                <option v-for="mois in 12" :key="mois">{{mois}}</option>
-            </select>
-            <select v-model="selectedDay">
-                <option v-for="jour in jours" :key="jour">{{jour}}</option>
-            </select>
+            <div class="select-date">
+                <select v-model="selectedYear" class="date">
+                    <option v-for="annee in annees" :key="annee">{{annee}}</option>
+                </select>
+                <select v-model="selectedMonth" class="date">
+                    <option v-for="mois in 12" :key="mois">{{mois}}</option>
+                </select>
+                <select v-model="selectedDay" class="date">
+                    <option v-for="jour in jours" :key="jour">{{jour}}</option>
+                </select>
+                <select @change="changeTrajet(trajet)">
+                    <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom}} </option>
+                </select>
+            </div>
 
-            <select @change="changeTrajet(trajet)">
-                <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom}} </option>
-            </select>
             <input type="text" class="first" v-model="nom" placeholder="Nom de la maraude" required>
             <input type="text" v-model="nbParticipants" placeholder="Nombre de participants" required>
             <div class="heure">
@@ -89,6 +91,19 @@ module.exports = {
 </script>
 
 <style scoped>
+
+.select-date {
+    width: 75%;
+    margin: auto;
+}
+
+select {
+    width: 22%;
+}
+
+input {
+    font-size: 20px;
+}
 .heure>*{
     display: inline-block;
     color: grey;

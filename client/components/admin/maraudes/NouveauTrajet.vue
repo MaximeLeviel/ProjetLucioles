@@ -67,9 +67,13 @@ module.exports = {
     cursor: pointer;
 }
 
-.etape>*{
-    display: inline-block;
+input {
     width: 100%;
+    font-size: 20px;
+}
+
+.etape {
+    display: inline-block;
     margin: auto;
 }
 

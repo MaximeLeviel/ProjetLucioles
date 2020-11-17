@@ -16,8 +16,8 @@
                 <a><router-link to='/admin/utilisateurs'>Utilisateurs</router-link></a>
                 <a><router-link to='/admin/admins'>Admins</router-link></a>
             </nav>
-            <router-view></router-view>
         </div>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -59,7 +59,7 @@ module.exports = {
 <style scoped>
 
 .navbar-admin {
-    background-color: #2c353d;
+    background-color: #005a87;
     width: 100%;
     height: 50px;
     bottom: 0;
