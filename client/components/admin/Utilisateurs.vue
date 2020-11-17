@@ -38,7 +38,6 @@ module.exports = {
         },
 
         userMaraude(user){
-            console.log({User: user})
             console.log(user.maraudes)
             return user.maraudes
         }
