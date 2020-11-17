@@ -16,8 +16,8 @@
                 <a><router-link to='/admin/utilisateurs'>Utilisateurs</router-link></a>
                 <a><router-link to='/admin/admins'>Admins</router-link></a>
             </nav>
+            <router-view></router-view>
         </div>
-        <router-view></router-view>
     </div>
 </template>
 
