@@ -6,6 +6,10 @@
         <h3>{{trajet.nom_trajet}}</h3>
         <p>Départ : {{trajet.depart}}</p>
         <p>Arrivée : {{trajet.arrivee}}</p>
+        <p>Trajet :</p>
+        <ul>
+            <li v-for="(etape, index) in trajet.trajet" :key="index">{{etape}}</li>
+        </ul>
     </div>
     <router-view></router-view>
   </div>
@@ -23,6 +27,7 @@ module.exports = {
     created: async function(){
         const result = await axios.get('/api/trajets')
         this.trajets = result.data
+        console.log(this.trajets.trajet)
     },
 }
 </script>

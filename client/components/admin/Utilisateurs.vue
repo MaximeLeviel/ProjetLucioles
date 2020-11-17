@@ -38,7 +38,9 @@ module.exports = {
         },
 
         userMaraude(user){
-            return user.maraude
+            console.log({User: user})
+            console.log(user.maraudes)
+            return user.maraudes
         }
     }
 }
