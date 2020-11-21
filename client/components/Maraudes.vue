@@ -49,6 +49,8 @@ module.exports = {
 .main {
   padding-top: 30px;
   padding-bottom: 20px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .maraude {
@@ -123,6 +125,12 @@ h2 {
   text-align: center;
   text-transform: uppercase;
   color: #fff;
+}
+
+@media only screen and (max-width: 900px) {
+  .maraude {
+    width: 90%;
+  }
 }
 
 </style>

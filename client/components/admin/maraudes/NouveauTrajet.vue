@@ -3,11 +3,13 @@
         <h2>Nouveau trajet</h2>
         <hr>
         <form @submit.prevent="creerTrajet">
-            <input type="text" v-model="nom" placeholder="Nom du trajet" required>
+            
+            <input type="text" class="nom-trajet" v-model="nom" placeholder="Nom du trajet" required>
+            
             <div v-for="(etape, index) in etapes" :key=index class="etape">
                 <div class="row">
-                    <input type="text" v-model="etapes[index]" :placeholder="'Etape ' + index" required>
-                    <p v-if="index > 0" class="delete" @click="deleteEtape(index)">X</p>
+                    <input type="text"  class="new-etape" v-model="etapes[index]" :placeholder="'Etape ' + index" required>
+                    <p v-if="index > 0" class="delete" @click="deleteEtape(index)">✖️</p>
                 </div>
             </div>
             <button type="button" @click="ajouterEtape">➕ Ajouter une étape</button>
@@ -65,19 +67,13 @@ module.exports = {
 </script>
 
 <style scoped>
-.delete:hover{
-    cursor: pointer;
-    display: inline-block;
-}
 
 input {
-    width: 100%;
     font-size: 20px;
 }
 
-.etape {
-    display: inline-block;
-    margin: auto;
+.nom-trajet {
+    width: 100%;
 }
 
 h2 {
@@ -114,4 +110,25 @@ button {
 form {
     margin-bottom: 30px;
 }
+
+.row {
+    width: 125%;
+    display: flex;
+    flex-direction: row;
+}
+
+.new-etape {
+    width: 90%;
+    margin-top: 15px;
+}
+
+.delete {
+    margin: auto;
+}
+
+.delete:hover{
+    cursor: pointer;
+    display: inline-block;
+}
+
 </style>
