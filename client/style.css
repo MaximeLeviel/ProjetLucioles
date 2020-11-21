@@ -137,7 +137,8 @@ input {
 }
 
 button {
-    font-family: Montserrat-bold;
+    font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: 3px;
     font-size: 15px;
     line-height: 1.5;
     color: #fff;

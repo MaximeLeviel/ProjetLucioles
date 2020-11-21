@@ -5,8 +5,10 @@
         <form @submit.prevent="creerTrajet">
             <input type="text" v-model="nom" placeholder="Nom du trajet" required>
             <div v-for="(etape, index) in etapes" :key=index class="etape">
-                <input type="text" v-model="etapes[index]" :placeholder="'Etape ' + index" required>
-                <p v-if="index > 0" class="delete" @click="deleteEtape(index)">X</p>
+                <div class="row">
+                    <input type="text" v-model="etapes[index]" :placeholder="'Etape ' + index" required>
+                    <p v-if="index > 0" class="delete" @click="deleteEtape(index)">X</p>
+                </div>
             </div>
             <button type="button" @click="ajouterEtape">➕ Ajouter une étape</button>
 
@@ -65,6 +67,7 @@ module.exports = {
 <style scoped>
 .delete:hover{
     cursor: pointer;
+    display: inline-block;
 }
 
 input {

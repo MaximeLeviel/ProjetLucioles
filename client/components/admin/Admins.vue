@@ -1,17 +1,20 @@
 <template>
   <div>
-        <div> 
+
+    <div class="container">
+        <div class="column-1">
             <h2>Ajouter un administrateur</h2>
             <hr>
-            <form @submit.prevent="ajouterAdmin">
-                <input type="text" v-model="email" placeholder="Entrez l'adresse mail" required>
-                <input type="text" v-model="password" placeholder="Entrez le mot de passe" required>
+            <div>
+                <form @submit.prevent="ajouterAdmin">
+                    <input type="text" v-model="email" placeholder="Entrez l'adresse mail" required>
+                    <input type="text" v-model="password" placeholder="Entrez le mot de passe" required>
 
-                <button type="submit">Ajouter</button>
-            </form>
+                    <button type="submit">Ajouter</button>
+                </form>
+            </div>
         </div>
-
-        <div>
+        <div class="column-2">
             <h2>Liste des administrateurs</h2>
             <hr>
             <div v-for="administrateur in administrateurs" :key="administrateur.id" class="admin">
@@ -19,6 +22,8 @@
                 <p v-if="administrateur.id !== currentAdmin" class="cross" @click="deleteAdmin(administrateur)">Supprimer l'administrateur</p>
             </div>
         </div>
+    </div>
+
   </div>
 </template>
 
@@ -66,6 +71,33 @@ module.exports = {
 </script>
 
 <style scoped>
+
+:root {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.column-1 {
+  flex-shrink: 0;
+  flex-basis: 50%; 
+}
+
+.column-2 {
+    margin: auto;
+}
+
+
+@media only screen and (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+
 h2 {
   font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
   font-size: 28px;
@@ -93,14 +125,10 @@ hr {
   margin: auto;
 }
 
-form {
-    margin-bottom: 15px;
-}
-
 .admin {
     border: solid 2px black;
     border-radius: 10px;
-    width: 30%;
+    width: 60%;
     background-color: #fff;
     margin: auto;
     text-align: center;
@@ -128,4 +156,5 @@ form {
 .id {
     text-decoration: bold;
 }
+
 </style>

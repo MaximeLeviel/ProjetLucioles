@@ -47,7 +47,7 @@ module.exports = {
 <style scoped>
 
 .main {
-  padding-top: 20px;
+  padding-top: 30px;
   padding-bottom: 20px;
 }
 
@@ -72,12 +72,12 @@ module.exports = {
   text-decoration-color:#fff;
   text-decoration-thickness: 0px;
   border-bottom: 0px solid #fff;
+  margin-bottom: 5px;
 }
 
 h3 {
   text-align: center;
   color: #007cba;
-  font-family: Poppins-Bold;
   font-size: 30px;
   font-weight: 300;
 
@@ -93,7 +93,8 @@ h3 {
   border-bottom: 0px solid #fff;
   text-transform: uppercase;
   margin: 30px 0 30px;
-border-bottom: 2px solid orange; 
+  border-bottom: 2px solid orange; 
+  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
 }
  
 h3 span { 
@@ -116,7 +117,7 @@ h2 {
   font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
   font-size: 28px;
   line-height: 1.1em;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   display: block;
   font-size: 1.5em;
   text-align: center;

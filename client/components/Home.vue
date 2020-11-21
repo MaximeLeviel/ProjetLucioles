@@ -88,29 +88,26 @@ div .flex_column {
   position: relative;
   min-height: 1px;
   width: 100%;
-  padding-top: 50px;
+  padding-top: 20px;
   padding-bottom: 50px;
 }
 
 .flex_column p {
   display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  margin-left: 60px;
+  margin-right: 60px;
+  margin-top: 30px;
+  text-align: justify;
 }
 
 h1 {
   font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
   font-size: 28px;
   line-height: 1.1em;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   display: block;
   font-size: 1.5em;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -129,6 +126,9 @@ hr {
 .info-lucioles {
   width: 30%;
   margin: auto;
+  margin-top: 40px;
+  margin-bottom: 0;
+  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
 }
 
 /* --- presentation de l'equipe --- */
@@ -204,6 +204,8 @@ a {
 button {
   margin-bottom: 10px;
   margin-top: 10px;
+  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: 3px;
 }
 
 .polaroids {

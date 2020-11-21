@@ -125,7 +125,7 @@ module.exports = {
 <style scoped>
 
 .main {
-  padding-top: 20px;
+  padding-top: 30px;
   padding-bottom: 20px;
 }
 
@@ -133,7 +133,7 @@ h2 {
   font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
   font-size: 28px;
   line-height: 1.1em;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   display: block;
   font-size: 1.5em;
   text-align: center;

@@ -50,7 +50,7 @@ module.exports = {
             trajets: null,
             selectedTrajet: "",
             trajet: null,
-            heures: '19',
+            heures: '20',
             minutes: "00",
             nom: ''
         }
@@ -70,7 +70,6 @@ module.exports = {
         this.trajets = result.data
         console.log(this.trajets)
         this.trajet = this.trajets[0]
-        this.nom = this.trajet.nom_trajet
         console.log(this.trajet)
     },
     
