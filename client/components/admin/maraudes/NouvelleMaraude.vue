@@ -14,7 +14,7 @@
                     <option v-for="jour in jours" :key="jour">{{jour}}</option>
                 </select>
                 <select @change="changeTrajet(trajet)" class="date">
-                    <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom}} </option>
+                    <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom_trajet}} </option>
                 </select>
             </div>
 

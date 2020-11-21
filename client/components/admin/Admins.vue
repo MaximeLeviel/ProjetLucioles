@@ -15,7 +15,6 @@
             <h2>Liste des administrateurs</h2>
             <hr>
             <div v-for="administrateur in administrateurs" :key="administrateur.id" class="admin">
-                <p id="id">{{administrateur.id}}</p>
                 <p id="email">{{administrateur.email}}</p>
                 <p v-if="administrateur.id !== currentAdmin" class="cross" @click="deleteAdmin(administrateur)">Supprimer l'administrateur</p>
             </div>
