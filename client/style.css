@@ -216,3 +216,8 @@ iframe[seamless] {
 	margin-bottom: -4px;  /* make the footer fully stick at the bottom and thus get rid of the small space */
 }
 
+@media only screen and (max-width: 900px) {
+    button {
+        font-size: 10px;
+    }
+}

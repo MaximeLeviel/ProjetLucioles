@@ -160,7 +160,6 @@ hr {
   }
 }
 
-/* Add some shadows to create a card effect */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background: #fff;
@@ -181,12 +180,10 @@ h2 {
   text-align: center;
 }
 
-/* Some left and right padding inside the container */
 .container {
   padding: 0 16px;
 }
 
-/* Clear floats */
 .container::after, .row::after {
   content: "";
   clear: both;
@@ -233,6 +230,17 @@ button {
 }
 
 .polaroids img {
-    border: 1px solid #C9C9C9;
+  border: 1px solid #C9C9C9;
+}
+
+@media only screen and (max-width: 900px) {
+  .row {
+    flex-direction: column;
+    margin: auto;
+  }
+
+  .column {
+    margin-left: 15%;
+  }
 }
 </style>
