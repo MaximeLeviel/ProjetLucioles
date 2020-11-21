@@ -63,16 +63,20 @@ module.exports = {
         this.annees = [annee, annee + 1]
         const result = await axios.get('/api/trajets')
         this.trajets = result.data
+        console.log(this.trajets)
         this.trajet = this.trajets[0]
-        this.nom = this.trajet.nom
+        this.nom = this.trajet.nom_trajet
         console.log(this.trajet)
     },
     
     methods: {
         changeTrajet(trajet){
-            this.trajet = trajet.trajet_id
-            this.nom = this.trajet.nom
+            console.log({trajet: trajet.nom_trajet})
+            this.trajet = trajet
+            this.nom = trajet.nom_trajet
+            console.log(this.nom)
         },
+
         async creerMaraude(){
             const maraude = {
                 jour: this.selectedDay,

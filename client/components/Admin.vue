@@ -4,7 +4,7 @@
             <form @submit.prevent="loginUser">
                 <h3>Connexion</h3>
                 <input type="text" v-model="email" placeholder="Email" required>
-                <input type="text" v-model="password" placeholder="Mot de passe" required>
+                <input type="password" v-model="password" placeholder="Mot de passe" required>
 
                 <button type="submit">Connexion</button>
             </form>
