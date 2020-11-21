@@ -1,16 +1,57 @@
 <template>
-  <div v-if="maraude!=null">
-    <h3>{{maraude.nom}}</h3>
-    <p>Date: {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} </p>
-    <p>Heure: {{maraude.heure}}</p>
-    <p>Lieu de départ: {{maraude.depart}}</p>
-    <p>Lieu d'arrivée: {{maraude.arrivee}}</p>
-    <p>Nombre de places encore disponibles: {{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}} </p>
+  <div v-if="maraude!=null" class="main">
+    <h2>{{maraude.nom}}</h2>
+    <hr>
 
+    <div class="limiter">
+      <div class="container-table">
+        <div class="wrap-table">
+            <div class="table">
+
+              <div class="row header">
+                <div class="cell">
+                  Date
+                </div>
+                <div class="cell">
+                  Heure
+                </div>
+                <div class="cell">
+                  Lieu de départ
+                </div>
+                <div class="cell">
+                  Lieu d'arrivée
+                </div>
+                <div class="cell">
+                  Nombre de places restantes
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="cell" data-title="Date">
+                  <p>{{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}}</p>
+                </div>
+                <div class="cell" data-title="Heure">
+                  <p>{{maraude.heure}}</p>
+                </div>
+                <div class="cell" data-title="Lieu de départ">
+                  <p>{{maraude.depart}}</p>
+                </div>
+                <div class="cell" data-title="Lieu d'arrivée">
+                  <p>{{maraude.arrivee}}</p>
+                </div>
+                <div class="cell" data-title="Places restantes">
+                  <p>{{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}}</p>
+                </div>
+              </div>
+
+            </div>
+        </div>
+      </div>
+    </div>
     
     <form @submit.prevent="verifierEmail" v-if="isUserConnu">
         <h3>Entrez votre email pour vous inscrire</h3>
-        <input type="text" v-model="email" placeholder="Entrez votre email" required>
+        <input type="text" v-model="email" placeholder="Adresse mail" required>
 
         <button type="submit">S'inscrire</button>
     </form>
@@ -82,4 +123,178 @@ module.exports = {
 </script>
 
 <style scoped>
+
+.main {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+h2 {
+  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  line-height: 1.1em;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 1.5em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+hr {
+  display: block;
+  border: 0;
+  border-radius: 3em;
+  border-top: 2px solid orange;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 10%;
+  margin: auto;
+}
+
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-table {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 33px 30px;
+}
+
+.wrap-table {
+  width: 960px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  display: table;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .table {
+    display: block;
+  }
+}
+
+.row {
+  display: table-row;
+  background: #fff;
+}
+
+.row.header {
+  color: #ffffff;
+  background: #006ba1;
+}
+
+@media screen and (max-width: 768px) {
+  .row {
+    display: block;
+  }
+
+  .row.header {
+    padding: 0;
+    height: 0px;
+  }
+
+  .row.header .cell {
+    display: none;
+  }
+
+  .row .cell:before {
+    font-family: Poppins-Bold;
+    font-size: 12px;
+    color: #808080;
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-weight: unset !important;
+
+    margin-bottom: 13px;
+    content: attr(data-title);
+    min-width: 98px;
+    display: block;
+  }
+}
+
+.cell {
+  display: table-cell;
+}
+
+@media screen and (max-width: 768px) {
+  .cell {
+    display: block;
+  }
+}
+
+.row .cell {
+  font-family: Poppins-Regular;
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.2;
+  font-weight: unset !important;
+
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.row.header .cell {
+  font-family: Poppins-Regular;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset !important;
+
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+
+.row .cell:nth-child(1) {
+  padding-left: 40px;
+}
+
+.table, .row {
+  width: 100% !important;
+}
+
+
+@media (max-width: 768px) {
+  .row {
+    border-bottom: 1px solid #f2f2f2;
+    padding-bottom: 18px;
+    padding-top: 30px;
+    padding-right: 15px;
+    margin: 0;
+  }
+  
+  .row .cell {
+    border: none;
+    padding-left: 30px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .row .cell:nth-child(1) {
+    padding-left: 30px;
+  }
+  
+  .row .cell {
+    font-family: Poppins-Regular;
+    font-size: 18px;
+    color: #555555;
+    line-height: 1.2;
+    font-weight: unset !important;
+  }
+
+  .table, .row, .cell {
+    width: 100% !important;
+  }
+}
 </style>

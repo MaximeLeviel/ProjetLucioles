@@ -1,5 +1,7 @@
 <template>
   <div class="main">
+    <h2>Cliquez sur une maraude pour vous inscrire !</h2>
+    <hr>
     <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
         <router-link :to="chemin(maraude)">
             <h3>{{maraude.nom}}</h3>
@@ -44,47 +46,82 @@ module.exports = {
 
 <style scoped>
 
-.maraude{
+.main {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.maraude {
   background-color: #fff;
   margin: auto;
   margin-top: 30px;
   margin-bottom: 30px;
-  width: 70%;
+  width: 40%;
   border-radius: 10px;
   color: black;
-}
-
-.maraude p {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
   text-decoration: none;
 }
 
-article {
-  display: flex;
+.maraude p {
+  color: black;
+  text-decoration: underline;
+  text-decoration-color:#fff;
+  text-decoration-thickness: 0px;
+  border-bottom: 0px solid #fff;
 }
 
-.article-img {
-  flex: 1;
-}
+h3 {
+  text-align: center;
+  color: #007cba;
+  font-family: Poppins-Bold;
+  font-size: 30px;
+  font-weight: 300;
 
-.article-img div {
-
-  max-height: 100%;
-  width: auto;
-  background-size: cover;
-  border-style: solid;
-  border-width: 2px;
-}
-
-.article-content {
-  flex: 3;
-}
-
-.article-title {
-  display: flex;
-  justify-content: space-between;
-}
-
-textarea {
+  line-height: 0.1em;
+  text-align: center;
   width: 100%;
+  display: block;
+  padding-bottom: 54px;
+  
+  text-decoration: underline;
+  text-decoration-color:#fff;
+  text-decoration-thickness: 0px;
+  border-bottom: 0px solid #fff;
+  text-transform: uppercase;
+  margin: 30px 0 30px;
+border-bottom: 2px solid orange; 
 }
+ 
+h3 span { 
+  background: rgb(248, 248, 248); 
+  padding:0 10px; 
+}
+
+hr {
+  display: block;
+  border: 0;
+  border-radius: 3em;
+  border-top: 2px solid orange;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 10%;
+  margin: auto;
+}
+
+h2 {
+  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  line-height: 1.1em;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 1.5em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
 </style>
