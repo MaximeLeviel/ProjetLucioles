@@ -19,7 +19,7 @@
             <hr>
             <div v-for="administrateur in administrateurs" :key="administrateur.id" class="admin">
                 <p id="email">{{administrateur.email}}</p>
-                <p v-if="administrateur.id !== currentAdmin" class="cross" @click="deleteAdmin(administrateur)">Supprimer l'administrateur</p>
+                <p v-if="administrateur.id !== currentAdmin" class="cross" @click="deleteAdmin(administrateur)">✖️</p>
             </div>
         </div>
     </div>
@@ -125,32 +125,46 @@ hr {
   margin: auto;
 }
 
-.admin {
+/*.admin {
     border: solid 2px black;
     border-radius: 10px;
-    width: 60%;
+    width: 90%;
     background-color: #fff;
     margin: auto;
     text-align: center;
     margin-top: 20px;
     padding: 20px;
-}
+}*/
 
 .admin:last-child {
     margin-bottom: 20px;
+}
+
+.admin {
+    max-width: 480px;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    margin-top: 25px;
+    border-radius: 10px;
+    border-width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    -moz-box-shadow: 0px 1px 5px 0px #656565;
+    -webkit-box-shadow: 0px 1px 5px 0px #656565;
+    -o-box-shadow: 0px 1px 5px 0px #656565;
+    box-shadow: 0px 1px 5px 0px #656565;
 }
 
 .admin p #id {
     text-decoration: bold;
 }
 
-.cross {
-    color: grey;
-}
-
 .cross:hover{
     cursor: pointer;
-    text-decoration: underline;
 }
 
 .id {
