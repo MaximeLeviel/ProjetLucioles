@@ -4,19 +4,19 @@
         <hr>
         <form @submit.prevent="creerMaraude">
             <div class="select-date">
-                <select v-model="selectedYear" class="date">
+                <select v-model="selectedYear" class="date" required>
                     <option :value="null">Année</option>
                     <option v-for="annee in annees" :key="annee">{{annee}}</option>
                 </select>
-                <select v-model="selectedMonth" class="date">
+                <select v-model="selectedMonth" class="date" required>
                     <option :value="null">Mois</option>
                     <option v-for="mois in 12" :key="mois">{{mois}}</option>
                 </select>
-                <select v-model="selectedDay" class="date">
+                <select v-model="selectedDay" class="date" required>
                     <option :value="null">Jour</option>
                     <option v-for="jour in jours" :key="jour">{{jour}}</option>
                 </select>
-                <select @change="changeTrajet()" class="date" id="trajet">
+                <select @change="changeTrajet()" class="date" id="trajet" required>
                     <option :value="null">Trajet</option>
                     <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom_trajet}} </option>
                 </select>

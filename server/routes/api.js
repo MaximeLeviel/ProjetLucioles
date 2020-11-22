@@ -349,7 +349,10 @@ router.post('/email', async (req, res) => {
     text: sql,
     values: [maraudeId, email]
   })
-  await inscriptionMaraude(participantID, maraudeId)
+  const inscription = await inscriptionMaraude(participantID, maraudeId)
+  if(inscription === false){
+    res.json({message: "Limite de participants atteinte."})
+  }
   res.json({connu: true, message: "Participant inscrit."})
 })
 
@@ -376,18 +379,29 @@ router.post('/participant', async (req, res) => {
   })
   console.log("done")
   const participantID = await getIdParticipant(email)
-  await inscriptionMaraude(participantID, maraudeId)
+  const inscription = await inscriptionMaraude(participantID, maraudeId)
+  if(inscription === false){
+    res.json({message: "Limite de participants atteinte."})
+  }
   res.json({message: "Participant enregistré et inscrit"})
 })
 
 async function inscriptionMaraude(participantId, maraudeId){
   console.log(participantId)
-  const sql = "UPDATE maraudes SET nombre_volontaires = nombre_volontaires + 1, participants = array_append(participants, $1) WHERE maraude_id = $2"
-  const result = await client.query({
+  var sql = "SELECT nombre_participants, nombre_volontaires FROM maraudes WHERE id = $1"
+  var result = await client.query({
+    text: sql,
+    values: [maraudeId],
+  })
+  if(result.rows[0].nombre_participants === result.rows[0].nombre_participants){
+    return false
+  }
+  sql = "UPDATE maraudes SET nombre_volontaires = nombre_volontaires + 1, participants = array_append(participants, $1) WHERE maraude_id = $2"
+  result = await client.query({
     text: sql,
     values: [participantId, maraudeId]
   })
-  return result
+  return true
 }
 
 async function getIdParticipant(email){
