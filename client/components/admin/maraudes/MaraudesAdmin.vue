@@ -8,7 +8,10 @@
         <p>Date : {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} {{maraude.heure}} </p>
         <p>Participants : {{maraude.nombre_volontaires}}/{{maraude.nombre_participants}} </p>
         <ul>
-            <li v-for="participant in maraude.participants" :key="participant.id" >{{participant.nom}} {{participant.prenom}}<br>Contact: {{participant.email}}, {{participant.telephone}} </li>
+            <li v-for="(participant, index) in maraude.participants" :key="index" >
+                <p v-if="participant != null">{{participant.nom}} {{participant.prenom}}<br>Contact: {{participant.email}}, {{participant.telephone}}</p> 
+                <p v-else>Utilisateur supprimé.</p>
+            </li>
         </ul>
         <button class="change"><p><router-link :to="changer(maraude.maraude_id)">Modifier cette maraude</router-link></p></button>
         <button class="delete"><p @click="deleteMaraude(maraude)">Supprimer cette maraude</p></button>
