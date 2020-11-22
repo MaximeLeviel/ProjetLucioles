@@ -267,20 +267,23 @@ router.delete('/admin/maraude/:id', async (req, res) => {
 })
 
 router.get('/admin/maraudesUtilisateurs', async (req, res) =>{
-  var result = await client.query({text: "SELECT * FROM maraudes\nORDER BY annee, mois, jour"})
-  for(var i = 0; i < result.rowCount; i++){
-    for(var j = 0; j < result.rows[i].participants.length; j++){
-      const sql = "SELECT id, nom, prenom, email, telephone FROM participants WHERE id = $1"
-      var result2 = await client.query({
-        text: sql,
-        values: [result.rows[i].participants[j]]
-      })
-      console.log({i: i, participants: result.rows[i].participants, result: result2.rows})
-      result.rows[i].participants[j] = result2.rows[0]
+  if (req.session.admin === true){    
+    var result = await client.query({text: "SELECT * FROM maraudes\nORDER BY annee, mois, jour"})
+    for(var i = 0; i < result.rowCount; i++){
+      for(var j = 0; j < result.rows[i].participants.length; j++){
+        const sql = "SELECT id, nom, prenom, email, telephone FROM participants WHERE id = $1"
+        var result2 = await client.query({
+          text: sql,
+          values: [result.rows[i].participants[j]]
+        })
+        console.log({i: i, participants: result.rows[i].participants, result: result2.rows})
+        result.rows[i].participants[j] = result2.rows[0]
+      }
     }
+    res.json(result.rows)
+    return
   }
-  res.json(result.rows)
-  return
+  res.status(400).json({message: "User not connected as an admin."})
 })
 
 router.post('/admin/trajet', async (req, res) => {
