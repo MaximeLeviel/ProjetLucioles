@@ -4,7 +4,7 @@
     <hr>
     <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
       <div v-if="placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants) == 0">
-        <h3>{{maraude.nom}}</h3>
+        <h3>{{maraude.nom_maraude}}</h3>
           <p>Date: {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} </p>
           <p>Heure: {{maraude.heure}}</p>
           <p>Lieu de départ: {{maraude.depart}}</p>
@@ -13,7 +13,7 @@
       </div>
       <div v-else>
         <router-link :to="chemin(maraude)">
-            <h3>{{maraude.nom}}</h3>
+            <h3>{{maraude.nom_maraude}}</h3>
             <p>Date: {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} </p>
             <p>Heure: {{maraude.heure}}</p>
             <p>Lieu de départ: {{maraude.depart}}</p>

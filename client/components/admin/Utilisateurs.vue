@@ -10,7 +10,7 @@
         <p><span>Participations :</span></p>
         <ul>
             <li v-for="(maraude, index) in userMaraude(user)" :key="index">
-                <p v-if="maraude != null">{{maraude.nom}} du {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}}</p> 
+                <p v-if="maraude != null">{{maraude.nom_maraude}} du {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}}</p> 
                 <p v-else>Maraude suprimée.</p>
             </li>
         </ul>

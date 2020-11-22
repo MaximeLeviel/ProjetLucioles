@@ -4,9 +4,12 @@
       <hr>
 
     <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
-        <h3><span>{{maraude.nom}}</span></h3>
+        <h3><span>{{maraude.nom_maraude}}</span></h3>
         <p>Date : {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} {{maraude.heure}} </p>
         <p>Participants : {{maraude.nombre_volontaires}}/{{maraude.nombre_participants}} </p>
+        <ul>
+            <li v-for="participant in maraude.participants" :key="participant.id" >{{participant.nom}} {{participant.prenom}}<br>Contact: {{participant.email}}, {{participant.telephone}} </li>
+        </ul>
         <p class="delete" @click="deleteMaraude(maraude)">Supprimer cette maraude</p>
     </div>
   </div>
@@ -22,8 +25,11 @@ module.exports = {
     },
 
     created: async function(){
-        const result = await axios.get('/api/maraudes')
+        console.log("Test1")
+        const result = await axios.get('/api/admin/maraudesUtilisateurs')
+        console.log("Test2")
         this.maraudes = result.data
+        console.log({maraudes: result.data})
     },
 
     methods: {

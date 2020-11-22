@@ -1,6 +1,6 @@
 <template>
   <div v-if="maraude!=null" class="main">
-    <h2>{{maraude.nom}}</h2>
+    <h2>{{maraude.nom_maraude}}</h2>
     <hr>
 
     <div class="limiter">

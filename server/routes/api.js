@@ -118,7 +118,7 @@ router.get('/admin/users', async (req, res) =>{
     console.log(data)
     for (var i = 0; i < data.length; i++){
       data[i].maraudes = []
-      const sql = "SELECT nom, jour, mois, annee, maraude_id FROM maraudes WHERE maraude_id=$1"
+      const sql = "SELECT nom_maraude, jour, mois, annee, maraude_id FROM maraudes WHERE maraude_id=$1"
       for (var j = 0; j < data[i].participations.length; j++){
         console.log(data[i].participations[j])
         result = await client.query({
@@ -159,7 +159,7 @@ router.post('/admin/maraude', async (req, res) => {
     const nbParticipants = req.body.nbParticipants
     const nom = req.body.nom
     
-    const sql = "INSERT INTO maraudes (jour, mois, annee, heure, type, nombre_participants, nombre_volontaires, nom, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)"
+    const sql = "INSERT INTO maraudes (jour, mois, annee, heure, type, nombre_participants, nombre_volontaires, nom_maraude, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)"
     await client.query({
       text: sql,
       values: [jour, mois, annee, heure, trajet, nbParticipants, 0, nom, "{}"]
@@ -227,7 +227,7 @@ router.put('/admin/maraude', async (req, res) => {
       if (values.length !== 0){
         sql += ","
       }
-      sql += "nom = $" + (values.length + 1)
+      sql += "nom_maraude = $" + (values.length + 1)
       values.push(nom)
     }
     
@@ -264,6 +264,23 @@ router.delete('/admin/maraude/:id', async (req, res) => {
     return
   }
   res.status(400).json({message: "User not connected as an admin."})
+})
+
+router.get('/admin/maraudesUtilisateurs', async (req, res) =>{
+  var result = await client.query({text: "SELECT * FROM maraudes\nORDER BY annee, mois, jour"})
+  for(var i = 0; i < result.rowCount; i++){
+    for(var j = 0; j < result.rows[i].participants.length; j++){
+      const sql = "SELECT id, nom, prenom, email, telephone FROM participants WHERE id = $1"
+      var result2 = await client.query({
+        text: sql,
+        values: [result.rows[i].participants[j]]
+      })
+      console.log({i: i, participants: result.rows[i].participants, result: result2.rows})
+      result.rows[i].participants[j] = result2.rows[0]
+    }
+  }
+  res.json(result.rows)
+  return
 })
 
 router.post('/admin/trajet', async (req, res) => {
