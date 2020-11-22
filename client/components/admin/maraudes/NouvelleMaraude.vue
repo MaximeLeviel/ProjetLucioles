@@ -76,7 +76,7 @@ module.exports = {
     methods: {
         changeTrajet(){
             var position = document.getElementById("trajet").selectedIndex
-            this.trajet = this.trajets[position]
+            this.trajet = this.trajets[position-1]
             this.nom = this.trajet.nom_trajet
         },
 

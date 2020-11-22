@@ -9,7 +9,7 @@
             <div v-for="(etape, index) in etapes" :key=index class="etape">
                 <div class="row">
                     <input type="text"  class="new-etape" v-model="etapes[index]" :placeholder="'Etape ' + index" required>
-                    <p v-if="index > 0" class="delete" @click="deleteEtape(index)">✖️</p>
+                    <p class="delete" @click="deleteEtape(index)">✖️</p>
                 </div>
             </div>
             <button type="button" @click="ajouterEtape">➕ Ajouter une étape</button>

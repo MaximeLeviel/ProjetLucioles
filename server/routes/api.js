@@ -8,7 +8,7 @@ const client = new Client({
   user: 'postgres',
   host: 'localhost',
   password: 'WebTeam',
-  database: 'projetLuciole'
+  database: 'projetLucioles'
 })
 
 client.connect()
@@ -320,6 +320,16 @@ router.get('/trajets', async (req, res) => {
 })
 
 router.post('/email', async (req, res) => {
+  const maraudeId = req.body.id
+  const placesRestantes = await isFull(maraudeId)
+  
+  console.log({placesRestantes: placesRestantes})
+
+  if(placesRestantes == false){
+    res.json({message: "Limite de participants atteinte."})
+    return
+  }
+
   const email = req.body.email
   const participantID = await getIdParticipant(email)
   if(participantID === false){
@@ -332,8 +342,6 @@ router.post('/email', async (req, res) => {
     values: [participantID]
   })
   console.log({result: result.rows[0].participations})
-
-  const maraudeId = req.body.id
 
   console.log(maraudeId)
 
@@ -349,15 +357,24 @@ router.post('/email', async (req, res) => {
     text: sql,
     values: [maraudeId, email]
   })
-  const inscription = await inscriptionMaraude(participantID, maraudeId)
-  if(inscription === false){
-    res.json({message: "Limite de participants atteinte."})
-  }
+  await inscriptionMaraude(participantID, maraudeId)
   res.json({connu: true, message: "Participant inscrit."})
 })
 
 router.post('/participant', async (req, res) => {
+  const maraudeId = req.body.id
+  
+  const placesRestantes = await isFull(maraudeId)
+
+  console.log({placesRestantes: placesRestantes})
+
+  if(placesRestantes == false){
+    res.json({message: "Limite de participants atteinte."})
+    return
+  }
+
   const email = req.body.email
+
   var sql = "SELECT id FROM participants WHERE email = $1"
   var result = await client.query({
     text: sql,
@@ -370,7 +387,6 @@ router.post('/participant', async (req, res) => {
   const nom = req.body.nom
   const prenom = req.body.prenom
   const telephone = req.body.phone
-  const maraudeId = req.body.id
   console.log(typeof maraudeId)
   sql = "INSERT INTO participants (nom, prenom, email, telephone, participations, nombre_participations) VALUES ($1, $2, $3, $4, $5, $6)"
   await client.query({
@@ -378,29 +394,33 @@ router.post('/participant', async (req, res) => {
     values: [nom, prenom, email, telephone, "{"+maraudeId+"}", 1]
   })
   console.log("done")
+
   const participantID = await getIdParticipant(email)
-  const inscription = await inscriptionMaraude(participantID, maraudeId)
-  if(inscription === false){
-    res.json({message: "Limite de participants atteinte."})
-  }
+  await inscriptionMaraude(participantID, maraudeId)
   res.json({message: "Participant enregistré et inscrit"})
 })
 
 async function inscriptionMaraude(participantId, maraudeId){
   console.log(participantId)
-  var sql = "SELECT nombre_participants, nombre_volontaires FROM maraudes WHERE id = $1"
-  var result = await client.query({
-    text: sql,
-    values: [maraudeId],
-  })
-  if(result.rows[0].nombre_participants === result.rows[0].nombre_participants){
-    return false
-  }
+  
   sql = "UPDATE maraudes SET nombre_volontaires = nombre_volontaires + 1, participants = array_append(participants, $1) WHERE maraude_id = $2"
-  result = await client.query({
+  await client.query({
     text: sql,
     values: [participantId, maraudeId]
   })
+}
+
+async function isFull(maraudeId){
+  const sql = "SELECT nombre_participants, nombre_volontaires FROM maraudes WHERE maraude_id = $1"
+  const result = await client.query({
+    text: sql,
+    values: [maraudeId],
+  })
+  console.log({isFull: result.rows})
+  if(result.rows[0].nombre_participants <= result.rows[0].nombre_volontaires){
+    console.log({return: false})
+    return false
+  }
   return true
 }
 

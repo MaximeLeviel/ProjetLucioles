@@ -88,6 +88,7 @@ module.exports = {
 
 .column-2 {
     margin: auto;
+    margin-top: 0;
 }
 
 
