@@ -3,6 +3,15 @@
     <h2>Cliquez sur une maraude pour vous inscrire !</h2>
     <hr>
     <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
+      <div v-if="placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants) == 0">
+        <h3>{{maraude.nom}}</h3>
+          <p>Date: {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} </p>
+          <p>Heure: {{maraude.heure}}</p>
+          <p>Lieu de départ: {{maraude.depart}}</p>
+          <p>Lieu d'arrivée: {{maraude.arrivee}}</p>
+          <p>Nombre de places encore disponibles: {{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}} </p>
+      </div>
+      <div v-else>
         <router-link :to="chemin(maraude)">
             <h3>{{maraude.nom}}</h3>
             <p>Date: {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} </p>
@@ -11,6 +20,7 @@
             <p>Lieu d'arrivée: {{maraude.arrivee}}</p>
             <p>Nombre de places encore disponibles: {{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}} </p>
         </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -23,22 +33,22 @@ module.exports = {
   },
   data () {
     return {
-        maraudes: null,
-        test: 5,
+      maraudes: null,
+      test: 5,
     }
   },
 
   created: async function() {
-      const result = await axios.get('/api/maraudesTrajets')
-      this.maraudes = result.data
+    const result = await axios.get('/api/maraudesTrajets')
+    this.maraudes = result.data
   },
 
   methods: {
     placesRestantes(placesPrises, placesTotales){
-        return placesTotales - placesPrises
+      return placesTotales - placesPrises
     },
     chemin(maraude){
-        return "/inscription/maraude/" + maraude.maraude_id
+      return "/inscription/maraude/" + maraude.maraude_id
     }
   }
 }

@@ -56,7 +56,8 @@ module.exports = {
                     trajet: this.etapes,
                 }
 
-                await axios.post('/api/admin/trajet', trajet)
+                const result = await axios.post('/api/admin/trajet', trajet)
+                alert(result.data.message)
             }
             else{
                 alert("Il faut au moins 2 étapes.")

@@ -4,7 +4,6 @@ const Admin = window.httpVueLoader('./components/Admin.vue')
 const Inscription = window.httpVueLoader('./components/Inscription.vue')
 
 const AdminMaraudes = window.httpVueLoader('./components/admin/MaraudesGestion.vue')
-const AdminDoleances = window.httpVueLoader('./components/admin/Doleances.vue')
 const AdminUtilisateurs = window.httpVueLoader('./components/admin/Utilisateurs.vue')
 const AdminAdmins = window.httpVueLoader('./components/admin/Admins.vue')
 
@@ -25,7 +24,6 @@ const routes = [
           {path: 'trajets', component: AdminGestionTrajets},
           {path: 'trajet/new', component: AdminNouveauTrajet}
         ]},
-      {path: 'doleances', component: AdminDoleances },
       {path: 'utilisateurs', component: AdminUtilisateurs},
       {path: 'admins', component: AdminAdmins}] },
   { path: '/inscription/maraude/:id', component: Inscription}

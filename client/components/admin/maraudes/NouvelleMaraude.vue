@@ -91,7 +91,8 @@ module.exports = {
                 nom: this.nom,
             }
 
-            await axios.post('/api/admin/maraude', maraude)
+            const result = await axios.post('/api/admin/maraude', maraude)
+            alert(result.data.message)
         }
     }
 }
