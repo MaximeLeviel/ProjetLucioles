@@ -1,23 +1,19 @@
 <template>
   <div>
-        <h2>Nouvelle Maraude</h2>
+        <h2>Maraude</h2>
         <hr>
-        <form @submit.prevent="creerMaraude">
+        <form @submit.prevent="modifierMaraude">
             <div class="select-date">
                 <select v-model="selectedYear" class="date" required>
-                    <option :value="null">Année</option>
                     <option v-for="annee in annees" :key="annee">{{annee}}</option>
                 </select>
                 <select v-model="selectedMonth" class="date" required>
-                    <option :value="null">Mois</option>
                     <option v-for="mois in 12" :key="mois">{{mois}}</option>
                 </select>
                 <select v-model="selectedDay" class="date" required>
-                    <option :value="null">Jour</option>
                     <option v-for="jour in jours" :key="jour">{{jour}}</option>
                 </select>
                 <select @change="changeTrajet()" class="date" id="trajet" required>
-                    <option :value="null">Trajet</option>
                     <option v-for="(trajet, index) in trajets" :key="trajet.trajet_id">{{index+1}}.{{trajet.nom_trajet}} </option>
                 </select>
             </div>
@@ -44,12 +40,12 @@ module.exports = {
             selectedYear: null,
             selectedMonth: null,
             selectedDay: null,
-            nbParticipants: '',
+            nbParticipants: null,
             trajets: null,
             trajet: null,
-            heures: '20',
-            minutes: "00",
-            nom: ''
+            heures: null,
+            minutes: null,
+            nom: null,
         }
     },
 
@@ -63,23 +59,37 @@ module.exports = {
         const actualDate = new Date()
         const annee = actualDate.getFullYear()
         this.annees = [annee, annee + 1]
+        var maraudeId = this.$route.params.id
 
-        const result = await axios.get('/api/trajets')
-        this.trajets = result.data
-        console.log(this.trajets)
+        var result = await axios.get('/api/maraude/' + maraudeId)
         
-        this.trajet = this.trajets[0]
-        console.log(this.trajet)
+        this.selectedYear = result.data[0].annee
+        this.selectedMonth = result.data[0].mois
+        this.selectedDay = result.data[0].jour
+        this.nbParticipants = result.data[0].nombre_participants 
+        this.heures = result.data[0].heure.substring(0, 2)
+        this.minutes = result.data[0].heure.substring(3, 5)
+        this.nom = result.data[0].nom_maraude
+        type = result.data[0].type
+
+        result = await axios.get('/api/trajets')
+        this.trajets = result.data
+
+        for(var i = 0; i < this.trajets.length; i++){
+            if(this.trajets[i].trajet_id == type){
+                this.trajet = this.trajets[i]
+            }
+        }
     },
     
     methods: {
         changeTrajet(){
             var position = document.getElementById("trajet").selectedIndex
-            this.trajet = this.trajets[position-1]
-            this.nom = this.trajet.nom_trajet
+            this.trajet = this.trajets[position]
+            console.log({trajet: this.trajet})
         },
 
-        async creerMaraude(){
+        async modifierMaraude(){
             const maraude = {
                 jour: this.selectedDay,
                 mois: this.selectedMonth,
@@ -88,9 +98,10 @@ module.exports = {
                 trajet: this.trajet.trajet_id,
                 nbParticipants: this.nbParticipants,
                 nom: this.nom,
+                id: this.$route.params.id,
             }
 
-            const result = await axios.post('/api/admin/maraude', maraude)
+            const result = await axios.put('/api/admin/maraude', maraude)
             alert(result.data.message)
         }
     }

@@ -85,7 +85,6 @@ module.exports = {
   created: async function() {
     var maraudeId = this.$route.params.id
     const result = await axios.get('/api/maraude/' + maraudeId)
-    console.log(result)
     this.maraude = result.data[0]
     console.log(this.maraude)
   },

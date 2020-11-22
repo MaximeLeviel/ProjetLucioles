@@ -11,6 +11,7 @@ const AdminGestionMaraudes = window.httpVueLoader('./components/admin/maraudes/M
 const AdminNouvelleMaraude =  window.httpVueLoader('./components/admin/maraudes/NouvelleMaraude.vue')
 const AdminGestionTrajets = window.httpVueLoader('./components/admin/maraudes/Trajets.vue')
 const AdminNouveauTrajet = window.httpVueLoader('./components/admin/maraudes/NouveauTrajet.vue')
+const AdminChangeMaraude = window.httpVueLoader('./components/admin/maraudes/ModifierMaraude.vue')
 
 const routes = [
   { path: '/', component: Home},
@@ -22,7 +23,8 @@ const routes = [
           {path: 'maraudes', component: AdminGestionMaraudes},
           {path: 'new', component: AdminNouvelleMaraude},
           {path: 'trajets', component: AdminGestionTrajets},
-          {path: 'trajet/new', component: AdminNouveauTrajet}
+          {path: 'trajet/new', component: AdminNouveauTrajet},
+          {path: 'change/:id', component: AdminChangeMaraude},
         ]},
       {path: 'utilisateurs', component: AdminUtilisateurs},
       {path: 'admins', component: AdminAdmins}] },

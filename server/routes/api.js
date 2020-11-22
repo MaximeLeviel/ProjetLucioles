@@ -172,79 +172,21 @@ router.post('/admin/maraude', async (req, res) => {
 
 router.put('/admin/maraude', async (req, res) => {
   if (req.session.admin === true){
-    var values = []
-    var sql = "UPDATE maraudes\nSET "
-    if (req.body.jour !== undefined){
-      const jour = req.body.jour
-      sql += "jour = $" + (values.length + 1)
-      values.push(jour)
-    }
-    if (req.body.mois !== undefined){
-      console.log("test1")
-      const mois = req.body.mois
-      if (values.length !== 0){
-        sql += ","
-      }
-      sql += "mois = $" + (values.length + 1)
-      values.push(mois)
-      console.log("test2")
-    }
-    if (req.body.annee !== undefined){
-      const annee = req.body.annee
-      if (values.length !== 0){
-        sql += ","
-      }
-      sql += "annee = $" + (values.length + 1)
-      values.push(annee)
-    }
-    if (req.body.heure !== undefined){
-      const heure = req.body.heure
-      if (values.length !== 0){
-        sql += ","
-      }
-      sql += "heure = $" + (values.length + 1)
-      values.push(heure)
-    }
-    if (req.body.trajet !== undefined){
-      const trajet = req.body.trajet
-      if (values.length !== 0){
-        sql += ","
-      }
-      sql += "type = $" + (values.length + 1)
-      values.push(trajet)
-    }
-    if (req.body.nbParticipants !== undefined){
-      const nbParticipants = req.body.nbParticipants
-      if (values.length !== 0){
-        sql += ", "
-      }
-      sql += "nombre_participants = $" + (values.length + 1)
-      values.push(nbParticipants)
-    }
-
-    if (req.body.nom !== undefined){
-      const nom = req.body.nom
-      if (values.length !== 0){
-        sql += ","
-      }
-      sql += "nom_maraude = $" + (values.length + 1)
-      values.push(nom)
-    }
+    const jour = req.body.jour
+    const mois = req.body.mois
+    const annee = req.body.annee
+    const heure = req.body.heure
+    const trajet = req.body.trajet
+    const nbParticipants = req.body.nbParticipants
+    const nom = req.body.nom
+    const id = req.body.id
+    const sql = "UPDATE maraudes\nSET jour=$1, mois=$2, annee=$3, heure=$4, type=$5, nombre_participants=$6, nom_maraude=$7 WHERE maraude_id=$8"
     
-    console.log("test3")
-
-    sql += " WHERE maraude_id = " + req.body.maraude_id
-    
-    console.log("test4")
-    console.log(sql)
-    console.log(values)
-
     await client.query({
       text: sql,
-      values: values
+      values: [jour, mois, annee, heure, trajet, nbParticipants, nom, id]
     })
     
-    console.log("test5")
     res.json({message: "Maraude modifiée."})
     return
   }

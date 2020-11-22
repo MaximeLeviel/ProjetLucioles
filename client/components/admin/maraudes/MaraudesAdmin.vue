@@ -11,6 +11,7 @@
             <li v-for="participant in maraude.participants" :key="participant.id" >{{participant.nom}} {{participant.prenom}}<br>Contact: {{participant.email}}, {{participant.telephone}} </li>
         </ul>
         <p class="delete" @click="deleteMaraude(maraude)">Supprimer cette maraude</p>
+        <p class="change"><router-link :to="changer(maraude.maraude_id)">Modifier cette maraude</router-link></p>
     </div>
   </div>
 </template>
@@ -40,6 +41,10 @@ module.exports = {
             result = await axios.get('/api/maraudes')
             this.maraudes = result.data
         },
+
+        changer(maraudeId){
+            return "/admin/maraudes/change/" + maraudeId
+        }
     }
 }
 </script>
