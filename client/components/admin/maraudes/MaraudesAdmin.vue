@@ -17,6 +17,8 @@
 
 
 <script>
+
+
 module.exports = {
     data () {
         return {
@@ -43,7 +45,7 @@ module.exports = {
 </script>
 
 <style scoped>
-.maraude{
+.maraude {
     width: 40%;
     background-color: rgb(248, 248, 248);
     border-radius: 10px;
@@ -59,6 +61,7 @@ module.exports = {
 .delete {
     text-align: center;
     color: grey;
+    margin-top: 20px;
 }
 
 .delete:hover{
@@ -112,4 +115,9 @@ h3 span {
     background: rgb(248, 248, 248); 
     padding:0 10px; 
 }
+
+ul {
+    margin-left: 40px;
+}
+
 </style>
