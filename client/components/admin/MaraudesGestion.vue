@@ -42,6 +42,7 @@ nav {
   font-size: 14px;
   font-weight: bold;
   text-decoration: none;
+  height: 50px;
 }
 
 .navbar-maraudes a:hover {

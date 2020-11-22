@@ -10,8 +10,8 @@
         <ul>
             <li v-for="participant in maraude.participants" :key="participant.id" >{{participant.nom}} {{participant.prenom}}<br>Contact: {{participant.email}}, {{participant.telephone}} </li>
         </ul>
-        <p class="delete" @click="deleteMaraude(maraude)">Supprimer cette maraude</p>
-        <p class="change"><router-link :to="changer(maraude.maraude_id)">Modifier cette maraude</router-link></p>
+        <button class="change"><p><router-link :to="changer(maraude.maraude_id)">Modifier cette maraude</router-link></p></button>
+        <button class="delete"><p @click="deleteMaraude(maraude)">Supprimer cette maraude</p></button>
     </div>
   </div>
 </template>
@@ -65,41 +65,59 @@ module.exports = {
 
 .delete {
     text-align: center;
-    color: grey;
+    color: #fff;
     margin-top: 20px;
+}
+
+.change {
+    text-align: center;
+    color: #fff;
+    margin-top: 20px;
+}
+
+a {
+    color: #fff;
+}
+
+a:hover {
+    color: #007cba;
 }
 
 .delete:hover{
     cursor: pointer;
-    text-decoration: underline;
+    color: red;
     transition: all 0.4s;
 }
 
+.change:hover{
+    cursor: pointer;
+}
+
 h2 {
-  font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
-  font-size: 28px;
-  line-height: 1.1em;
-  margin-bottom: 10px;
-  display: block;
-  font-size: 1.5em;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  text-align: center;
-  text-transform: uppercase;
-  color: #fff;
+    font-family: 'open sans', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica-Neue', Helvetica, Arial, sans-serif;
+    font-size: 28px;
+    line-height: 1.1em;
+    margin-bottom: 10px;
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
 }
 
 hr {
-  display: block;
-  border: 0;
-  border-radius: 3em;
-  border-top: 2px solid orange;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 10%;
-  margin: auto;
+    display: block;
+    border: 0;
+    border-radius: 3em;
+    border-top: 2px solid orange;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 10%;
+    margin: auto;
 }
 
 h3 { 
