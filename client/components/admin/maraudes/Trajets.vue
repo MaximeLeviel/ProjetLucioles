@@ -36,7 +36,7 @@ module.exports = {
 .trajet{
     background-color: rgb(248, 248, 248);
     border-radius: 10px;
-    width: 40%;
+    width: 480px;
     margin: auto;
     margin-top: 20px;
     padding: 20px;

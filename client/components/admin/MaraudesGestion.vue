@@ -4,7 +4,7 @@
           <a><router-link to='/admin/maraudes/maraudes'>Maraudes</router-link></a>
           <a><router-link to='/admin/maraudes/new'>Nouvelle maraude</router-link></a>
           <a><router-link to='/admin/maraudes/trajets'>Trajets</router-link></a>
-          <a><router-link to='/admin/maraudes/trajet/new'>Nouveau trajet</router-link></a>
+          <a class="nouveau-trajet"><router-link to='/admin/maraudes/trajet/new'>Nouveau trajet</router-link></a>
         </nav>
         <router-view></router-view>
   </div>

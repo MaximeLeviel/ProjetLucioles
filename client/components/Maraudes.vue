@@ -9,7 +9,7 @@
           <p>Heure: {{maraude.heure}}</p>
           <p>Lieu de départ: {{maraude.depart}}</p>
           <p>Lieu d'arrivée: {{maraude.arrivee}}</p>
-          <p>Nombre de places encore disponibles: {{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}} </p>
+          <p>Nombre de places disponibles: {{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}} </p>
       </div>
       <div v-else>
         <router-link :to="chemin(maraude)">
@@ -18,7 +18,7 @@
             <p>Heure: {{maraude.heure}}</p>
             <p>Lieu de départ: {{maraude.depart}}</p>
             <p>Lieu d'arrivée: {{maraude.arrivee}}</p>
-            <p>Nombre de places encore disponibles: {{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}} </p>
+            <p>Nombre de places disponibles: {{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}} </p>
         </router-link>
       </div>
     </div>
@@ -68,7 +68,7 @@ module.exports = {
   margin: auto;
   margin-top: 30px;
   margin-bottom: 30px;
-  width: 40%;
+  width: 480px;
   border-radius: 10px;
   color: black;
   padding-top: 20px;
