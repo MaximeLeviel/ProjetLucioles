@@ -46,7 +46,7 @@ module.exports = {
 
 <style scoped>
 .maraude {
-    width: 40%;
+    width: 480px;
     background-color: rgb(248, 248, 248);
     border-radius: 10px;
     margin: auto;

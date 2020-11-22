@@ -289,9 +289,6 @@ form h3 {
 
 /* ------ MEDIA QUERIES ------ */
 @media (max-width: 800px) {
-	iframe {
-		height: 220px;
-	}
 
 	.footer-distributed .footer-left, .footer-distributed .footer-right{
 		text-align: center;
@@ -305,11 +302,4 @@ form h3 {
 	.footer-distributed .footer-left p.footer-links{
 		line-height: 1.8;
 	}
-}
-
-@media only screen and (max-width: 900px) {
-    button {
-        font-size: 10px;
-    }
-
 }

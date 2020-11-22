@@ -53,7 +53,7 @@ module.exports = {
 .user{
     background-color: rgb(248, 248, 248);
     border-radius: 10px;
-    width: 40%;
+    width: 480px;
     margin: auto;
     padding: 20px;
     margin-top: 20px;

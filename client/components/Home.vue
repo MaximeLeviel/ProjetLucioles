@@ -74,6 +74,7 @@ module.exports = {
   width: 100%;
   background-color:#fff;
 }
+
 .container {
   position: relative;
   width: 100%;
@@ -242,5 +243,10 @@ button {
   .column {
     margin-left: 15%;
   }
+
+  .info-lucioles {
+    font-size: 10px;
+  }
 }
+
 </style>
