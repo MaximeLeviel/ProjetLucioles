@@ -6,6 +6,7 @@ const Inscription = window.httpVueLoader('./components/Inscription.vue')
 const AdminMaraudes = window.httpVueLoader('./components/admin/MaraudesGestion.vue')
 const AdminUtilisateurs = window.httpVueLoader('./components/admin/Utilisateurs.vue')
 const AdminAdmins = window.httpVueLoader('./components/admin/Admins.vue')
+const AdminDoleances = window.httpVueLoader('./components/admin/Doleances.vue')
 
 const AdminGestionMaraudes = window.httpVueLoader('./components/admin/maraudes/MaraudesAdmin.vue')
 const AdminNouvelleMaraude =  window.httpVueLoader('./components/admin/maraudes/NouvelleMaraude.vue')
@@ -27,7 +28,10 @@ const routes = [
           {path: 'change/:id', component: AdminChangeMaraude},
         ]},
       {path: 'utilisateurs', component: AdminUtilisateurs},
-      {path: 'admins', component: AdminAdmins}] },
+      {path: 'admins', component: AdminAdmins},
+      {path: 'doleances', component: AdminDoleances}
+    ]
+  },
   { path: '/inscription/maraude/:id', component: Inscription}
 ]
 

@@ -100,7 +100,7 @@ module.exports = {
       }
       const result = await axios.post('/api/email', inscription)
       if (result.data.connu === false){
-        this.isUserConnu = false 
+        this.isUserConnu = false
       }
       else{
         alert(result.data.message)

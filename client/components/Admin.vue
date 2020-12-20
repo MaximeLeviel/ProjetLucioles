@@ -14,6 +14,7 @@
                 <a><router-link to='/admin/maraudes/maraudes'>Maraudes</router-link></a>
                 <a><router-link to='/admin/utilisateurs'>Utilisateurs</router-link></a>
                 <a><router-link to='/admin/admins'>Admins</router-link></a>
+                <a><router-link to='/admin/doleances'>Doleances</router-link></a>
             </nav>
             <router-view></router-view>
         </div>

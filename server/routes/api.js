@@ -293,6 +293,11 @@ router.post('/email', async (req, res) => {
   }
 
   const email = req.body.email
+
+  if (!email.match(/[a-z0-9_\-\.]+@[a-z0-9_\-\.]+\.[a-z]+/i)) {
+    res.json({message: "Le format de l'adresse mail n'est pas valide. Veuillez entrer une adresse amil valide."})
+  }
+
   const participantID = await getIdParticipant(email)
   if(participantID === false){
     res.json({connu: false, message: "Participant non inscrit."})
@@ -397,3 +402,27 @@ async function getIdParticipant(email){
   }
   return result.rows[0].id
 }
+
+router.get('/doleances', async (req, res)=> {
+  const result = await client.query({text: "SELECT doleances.id, doleances.lieu, doleances.coordonnees, doleances.objet, doleances.description, trajets.nom_trajet FROM doleances, trajets WHERE (trajets.trajet_id = doleances.trajet_associe)"})
+  res.json(result.rows)
+  return
+})
+
+router.post('/admin/doleance', async (req, res) =>{
+  objet = req.body.objet,
+  description = req.body.description,
+  lieu = req.body.lieu,
+  trajet = req.body.trajet
+
+  if (lieu == null){
+    res.json({message: "Une position est necessaire."})
+    return
+  }
+  const sql = "INSERT INTO doleances (objet, description, lieu, trajet_associe) VALUES ($1, $2, $3, $4)"
+  await client.query({
+    text: sql,
+    values: [objet, description, lieu, trajet],
+  })
+  res.json({message: "Doleance enregistrée."})
+})
