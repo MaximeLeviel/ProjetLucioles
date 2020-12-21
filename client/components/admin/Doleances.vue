@@ -61,8 +61,9 @@ module.exports = {
 
     methods: {
         async deleteDoleance(doleance){
-            const result1 = await axios.delete('/api/admin/doleance' + doleance.id)
-            result1 = await axios.get('/api/doleances')
+            console.log({id: doleance.id})
+            await axios.delete('/api/admin/doleance/' + doleance.id)
+            const result = await axios.get('/api/doleances')
             this.doleances = result.data
         },
 
@@ -167,5 +168,28 @@ module.exports = {
 
     .doleance p span {
         text-decoration: underline;
+    }
+
+    select {
+        font-family: Poppins-Medium;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #666;
+        display: block;
+        width: 100%;
+        background: #e6e6e6;
+        height: 50px;
+        border-radius: 25px;
+        padding: 0 30px 0 68px;
+        border: none;
+        margin-bottom: 15px;
+    }
+
+    .delete{
+        text-align: center;
+    }
+    
+    .delete:hover{
+        cursor: pointer;
     }
 </style>

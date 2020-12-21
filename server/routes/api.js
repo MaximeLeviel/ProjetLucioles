@@ -78,7 +78,7 @@ router.post('/admin/register', async (req, res) =>{
     res.json(result.rows)
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 router.delete('/admin/:id', async (req, res) => {
@@ -98,7 +98,7 @@ router.delete('/admin/:id', async (req, res) => {
     res.json(result.rows)
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 router.get('/admin/admins', async (req, res) =>{
@@ -107,7 +107,7 @@ router.get('/admin/admins', async (req, res) =>{
     res.json({currentId: req.session.adminId, administrateurs: result.rows})
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 router.get('/admin/users', async (req, res) =>{
@@ -132,7 +132,7 @@ router.get('/admin/users', async (req, res) =>{
     res.json(data)
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 router.delete('/admin/user/:id', async (req, res) => {
@@ -145,7 +145,7 @@ router.delete('/admin/user/:id', async (req, res) => {
     })
     res.json({message: "Utilisateur supprimé."})
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 //Maraudes management
@@ -167,7 +167,7 @@ router.post('/admin/maraude', async (req, res) => {
     res.json({message: "Maraude créé."})
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 router.put('/admin/maraude', async (req, res) => {
@@ -190,14 +190,14 @@ router.put('/admin/maraude', async (req, res) => {
     res.json({message: "Maraude modifiée."})
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 router.delete('/admin/maraude/:id', async (req, res) => {
   if (req.session.admin === true){
     const deleteMaraude = req.params.id
     const sql = "DELETE FROM maraudes WHERE maraude_id=$1"
-    var result = await client.query({
+    const result = await client.query({
       text: sql,
       values: [deleteMaraude]
     })
@@ -205,7 +205,7 @@ router.delete('/admin/maraude/:id', async (req, res) => {
     res.json({message: "Maraude supprimée."})
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 router.get('/admin/maraudesUtilisateurs', async (req, res) =>{
@@ -225,7 +225,7 @@ router.get('/admin/maraudesUtilisateurs', async (req, res) =>{
     res.json(result.rows)
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 router.post('/admin/trajet', async (req, res) => {
@@ -243,7 +243,48 @@ router.post('/admin/trajet', async (req, res) => {
     res.json({message: "Trajet créé."})
     return
   }
-  res.status(400).json({message: "User not connected as an admin."})
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
+})
+
+router.post('/admin/doleance', async (req, res) =>{
+  if (req.session.admin === true){
+    objet = req.body.objet,
+    description = req.body.description,
+    lieu = req.body.lieu,
+    trajet = req.body.trajet
+
+    if (lieu == null){
+      res.json({message: "Une position est necessaire."})
+      return
+    }
+    const sql = "INSERT INTO doleances (objet, description, lieu, trajet_associe) VALUES ($1, $2, $3, $4)"
+    await client.query({
+      text: sql,
+      values: [objet, description, lieu, trajet],
+    })
+    res.json({message: "Doleance enregistrée."})
+    return
+  }
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
+  
+})
+
+router.delete('/admin/doleance/:id', async (req, res) =>{
+  
+  if (req.session.admin === true){
+    console.log("Inside if")
+    const doleance = req.params.id
+    console.log({id: doleance})
+    const sql = "DELETE FROM doleances WHERE id=$1"
+    const result = await client.query({
+      text: sql,
+      values: [doleance]
+    })
+    
+    res.json({message: "Doleance supprimée."})
+    return
+  }
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
 //End of admin part
@@ -409,20 +450,3 @@ router.get('/doleances', async (req, res)=> {
   return
 })
 
-router.post('/admin/doleance', async (req, res) =>{
-  objet = req.body.objet,
-  description = req.body.description,
-  lieu = req.body.lieu,
-  trajet = req.body.trajet
-
-  if (lieu == null){
-    res.json({message: "Une position est necessaire."})
-    return
-  }
-  const sql = "INSERT INTO doleances (objet, description, lieu, trajet_associe) VALUES ($1, $2, $3, $4)"
-  await client.query({
-    text: sql,
-    values: [objet, description, lieu, trajet],
-  })
-  res.json({message: "Doleance enregistrée."})
-})
