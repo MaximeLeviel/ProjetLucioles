@@ -2,11 +2,12 @@ const Home = window.httpVueLoader('./components/Home.vue')
 const Maraudes = window.httpVueLoader('./components/Maraudes.vue')
 const Admin = window.httpVueLoader('./components/Admin.vue')
 const Inscription = window.httpVueLoader('./components/Inscription.vue')
+const Doleances = window.httpVueLoader('./components/Doleances.vue')
 
 const AdminMaraudes = window.httpVueLoader('./components/admin/MaraudesGestion.vue')
 const AdminUtilisateurs = window.httpVueLoader('./components/admin/Utilisateurs.vue')
 const AdminAdmins = window.httpVueLoader('./components/admin/Admins.vue')
-const AdminDoleances = window.httpVueLoader('./components/admin/Doleances.vue')
+const AdminDoleances = window.httpVueLoader('./components/admin/DoleancesGestion.vue')
 
 const AdminGestionMaraudes = window.httpVueLoader('./components/admin/maraudes/MaraudesAdmin.vue')
 const AdminNouvelleMaraude =  window.httpVueLoader('./components/admin/maraudes/NouvelleMaraude.vue')
@@ -17,6 +18,7 @@ const AdminChangeMaraude = window.httpVueLoader('./components/admin/maraudes/Mod
 const routes = [
   { path: '/', component: Home},
   { path: '/maraudes', component: Maraudes },
+  { path: '/doleances', component: Doleances},
   { path: '/admin', component: Admin,
     children: [
       {path: 'maraudes', component: AdminMaraudes,

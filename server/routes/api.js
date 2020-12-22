@@ -114,18 +114,14 @@ router.get('/admin/users', async (req, res) =>{
   if (req.session.admin === true){
     var result = await client.query({text: "SELECT * FROM participants"})
     var data = result.rows
-    console.log(result)
-    console.log(data)
     for (var i = 0; i < data.length; i++){
       data[i].maraudes = []
       const sql = "SELECT nom_maraude, jour, mois, annee, maraude_id FROM maraudes WHERE maraude_id=$1"
       for (var j = 0; j < data[i].participations.length; j++){
-        console.log(data[i].participations[j])
         result = await client.query({
           text: sql,
           values: [data[i].participations[j]],
         })
-        console.log(result)
         data[i].maraudes.push(result.rows[0])
       }
     }
@@ -218,7 +214,6 @@ router.get('/admin/maraudesUtilisateurs', async (req, res) =>{
           text: sql,
           values: [result.rows[i].participants[j]]
         })
-        console.log({i: i, participants: result.rows[i].participants, result: result2.rows})
         result.rows[i].participants[j] = result2.rows[0]
       }
     }
@@ -234,7 +229,6 @@ router.post('/admin/trajet', async (req, res) => {
     const depart = req.body.depart
     const arrivee = req.body.arrivee
     const trajet = req.body.trajet
-    console.log({trajet: trajet})
     const sql = "INSERT INTO trajets (nom_trajet, depart, arrivee, trajet) VALUES ($1, $2, $3, $4)"
     await client.query({
       text: sql,
@@ -270,11 +264,8 @@ router.post('/admin/doleance', async (req, res) =>{
 })
 
 router.delete('/admin/doleance/:id', async (req, res) =>{
-  
   if (req.session.admin === true){
-    console.log("Inside if")
     const doleance = req.params.id
-    console.log({id: doleance})
     const sql = "DELETE FROM doleances WHERE id=$1"
     const result = await client.query({
       text: sql,
@@ -300,19 +291,15 @@ router.get('/maraudes', async (req, res) => {
 router.get('/maraudesTrajets', async(req, res) => {
   const result = await client.query({text: "SELECT * FROM maraudes\nINNER JOIN trajets ON maraudes.type=trajets.trajet_id\nORDER BY maraudes.annee, maraudes.mois, maraudes.jour"})
   res.json(result.rows)
-  console.log(result.rows)
 })
 
 router.get('/maraude/:id', async (req,res) => {
   const sql = "SELECT *\nFROM maraudes\nINNER JOIN trajets ON maraudes.type=trajets.trajet_id AND maraudes.maraude_id=$1"
   const maraudeId = req.params.id
-  console.log(sql)
-  console.log(maraudeId)
   const result = await client.query({
     text: sql,
     values: [maraudeId]
   })
-  console.log(result)
   res.json(result.rows)
 })
 
@@ -325,8 +312,6 @@ router.get('/trajets', async (req, res) => {
 router.post('/email', async (req, res) => {
   const maraudeId = req.body.id
   const placesRestantes = await isFull(maraudeId)
-  
-  console.log({placesRestantes: placesRestantes})
 
   if(placesRestantes == false){
     res.json({message: "Limite de participants atteinte."})
@@ -349,9 +334,6 @@ router.post('/email', async (req, res) => {
     text: sql,
     values: [participantID]
   })
-  console.log({result: result.rows[0].participations})
-
-  console.log(maraudeId)
 
   for(var i = 0; i < result.rows[0].participations.length; i++){
     if(result.rows[0].participations[i] == maraudeId){
@@ -374,8 +356,6 @@ router.post('/participant', async (req, res) => {
   
   const placesRestantes = await isFull(maraudeId)
 
-  console.log({placesRestantes: placesRestantes})
-
   if(placesRestantes == false){
     res.json({message: "Limite de participants atteinte."})
     return
@@ -395,22 +375,18 @@ router.post('/participant', async (req, res) => {
   const nom = req.body.nom
   const prenom = req.body.prenom
   const telephone = req.body.phone
-  console.log(typeof maraudeId)
   sql = "INSERT INTO participants (nom, prenom, email, telephone, participations, nombre_participations) VALUES ($1, $2, $3, $4, $5, $6)"
   await client.query({
     text: sql,
     values: [nom, prenom, email, telephone, "{"+maraudeId+"}", 1]
   })
-  console.log("done")
 
   const participantID = await getIdParticipant(email)
   await inscriptionMaraude(participantID, maraudeId)
   res.json({message: "Participant enregistré et inscrit"})
 })
 
-async function inscriptionMaraude(participantId, maraudeId){
-  console.log(participantId)
-  
+async function inscriptionMaraude(participantId, maraudeId){  
   sql = "UPDATE maraudes SET nombre_volontaires = nombre_volontaires + 1, participants = array_append(participants, $1) WHERE maraude_id = $2"
   await client.query({
     text: sql,
@@ -424,9 +400,7 @@ async function isFull(maraudeId){
     text: sql,
     values: [maraudeId],
   })
-  console.log({isFull: result.rows})
   if(result.rows[0].nombre_participants <= result.rows[0].nombre_volontaires){
-    console.log({return: false})
     return false
   }
   return true
@@ -450,3 +424,20 @@ router.get('/doleances', async (req, res)=> {
   return
 })
 
+router.get('/doleance/trajet/:id', async (req, res) => {
+  const trajet_id = req.params.id
+  console.log({id: trajet_id})
+  const sql = "SELECT * FROM doleances WHERE trajet_associe = $1"
+  const result = await client.query(({
+    text: sql,
+    values: [trajet_id]
+  }))
+  console.log({result: result})
+  if(result.rowCount == 0){
+    res.json(null)
+    console.log("Inside if")
+    return
+  }
+  console.log("Outside if")
+  res.json(result.rows)
+})

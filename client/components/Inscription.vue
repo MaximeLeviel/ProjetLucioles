@@ -6,49 +6,59 @@
     <div class="limiter">
       <div class="container-table">
         <div class="wrap-table">
-            <div class="table">
+          <div class="table">
 
-              <div class="row header">
-                <div class="cell">
-                  Date
-                </div>
-                <div class="cell">
-                  Heure
-                </div>
-                <div class="cell">
-                  Lieu de départ
-                </div>
-                <div class="cell">
-                  Lieu d'arrivée
-                </div>
-                <div class="cell">
-                  Nombre de places restantes
-                </div>
+            <div class="row header">
+              <div class="cell">
+                Date
               </div>
+              <div class="cell">
+                Heure
+              </div>
+              <div class="cell">
+                Lieu de départ
+              </div>
+              <div class="cell">
+                Lieu d'arrivée
+              </div>
+              <div class="cell">
+                Nombre de places restantes
+              </div>
+            </div>
 
-              <div class="row">
-                <div class="cell" data-title="Date">
-                  <p>{{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}}</p>
-                </div>
-                <div class="cell" data-title="Heure">
-                  <p>{{maraude.heure}}</p>
-                </div>
-                <div class="cell" data-title="Lieu de départ">
-                  <p>{{maraude.depart}}</p>
-                </div>
-                <div class="cell" data-title="Lieu d'arrivée">
-                  <p>{{maraude.arrivee}}</p>
-                </div>
-                <div class="cell" data-title="Places restantes">
-                  <p>{{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}}</p>
-                </div>
+            <div class="row">
+              <div class="cell" data-title="Date">
+                <p>{{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}}</p>
+              </div>
+              <div class="cell" data-title="Heure">
+                <p>{{maraude.heure}}</p>
+              </div>
+              <div class="cell" data-title="Lieu de départ">
+                <p>{{maraude.depart}}</p>
+              </div>
+              <div class="cell" data-title="Lieu d'arrivée">
+                <p>{{maraude.arrivee}}</p>
+              </div>
+              <div class="cell" data-title="Places restantes">
+                <p>{{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}}</p>
               </div>
 
             </div>
+          </div>
         </div>
       </div>
     </div>
     
+    <div v-if="doleances != null">
+      <h3>Doléances associées</h3>
+      <div v-for="doleance in doleances" :key="doleance.id">
+      <p>{{doleance.objet}}</p>
+      <p>{{doleance.description}}</p>
+      <p>{{doleance.nom_trajet}}</p>
+      <p>{{doleance.lieu}}</p>
+      </div>
+    </div>
+
     <form @submit.prevent="verifierEmail" v-if="isUserConnu">
         <h3>Entrez votre email pour vous inscrire</h3>
         <input type="text" v-model="email" placeholder="Adresse mail" required>
@@ -79,14 +89,18 @@ module.exports = {
         nom: '',
         prenom: '',
         phone: '',
+        doleances: null
     }
   },
 
   created: async function() {
-    var maraudeId = this.$route.params.id
-    const result = await axios.get('/api/maraude/' + maraudeId)
-    this.maraude = result.data[0]
-    console.log(this.maraude)
+    const maraudeId = this.$route.params.id
+    const result1 = await axios.get('/api/maraude/' + maraudeId)
+    this.maraude = result1.data[0]
+    const result2 = await axios.get('/api/doleance/trajet/' + this.maraude.trajet_id)
+    console.log("After axios")
+    this.doleances = result2.data
+    console.log({resultDoleances: this.doleances})
   },
 
   methods: {
