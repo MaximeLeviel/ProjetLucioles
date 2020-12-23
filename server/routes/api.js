@@ -55,27 +55,27 @@ router.post('/admin/register', async (req, res) =>{
     const email = req.body.email
     const password = req.body.password
 
-    var sql = "SELECT * FROM admins WHERE email=$1"
-    var result = await client.query({
-      text: sql,
+    const sql1 = "SELECT * FROM admins WHERE email=$1"
+    const result1 = await client.query({
+      text: sql1,
       values: [email] // ici name et description ne sont pas concaténées à notre requête
     })
 
-    if(result.rowCount !== 0){
+    if(result1.rowCount !== 0){
       res.status(401).json({ message: 'Admin already exist'})
       return
     }
 
     const hash = await bcrypt.hash(password, 10)
 
-    sql = "INSERT INTO admins (email, password) VALUES ($1, $2)"
-    result = await client.query({
-      text: sql,
+    const sql2 = "INSERT INTO admins (email, password) VALUES ($1, $2)"
+    await client.query({
+      text: sql2,
       values: [email, hash]
     })
 
-    result = await client.query({text: "SELECT id, email FROM admins"})
-    res.json(result.rows)
+    const result2 = await client.query({text: "SELECT id, email FROM admins"})
+    res.json(result2.rows)
     return
   }
   res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
@@ -84,17 +84,17 @@ router.post('/admin/register', async (req, res) =>{
 router.delete('/admin/:id', async (req, res) => {
   if (req.session.admin === true){
     const deleteAdmin = req.params.id
-    if (deleteAdmin == req.session.adminId){
+    if (deleteAdmin === req.session.adminId){
       res.status(401).json({message: "You can't delete the current admin"})
       return
     }
     const sql = "DELETE FROM admins WHERE id=$1"
-    var result = await client.query({
+    await client.query({
       text: sql,
       values: [deleteAdmin]
     })
 
-    result = await client.query({text: "SELECT id, email FROM admins"})
+    const result = await client.query({text: "SELECT id, email FROM admins"})
     res.json(result.rows)
     return
   }
@@ -112,17 +112,17 @@ router.get('/admin/admins', async (req, res) =>{
 
 router.get('/admin/users', async (req, res) =>{
   if (req.session.admin === true){
-    var result = await client.query({text: "SELECT * FROM participants"})
-    var data = result.rows
-    for (var i = 0; i < data.length; i++){
+    const result1 = await client.query({text: "SELECT * FROM participants"});
+    const data = result1.rows;
+    for (let i = 0; i < data.length; i++){
       data[i].maraudes = []
       const sql = "SELECT nom_maraude, jour, mois, annee, maraude_id FROM maraudes WHERE maraude_id=$1"
-      for (var j = 0; j < data[i].participations.length; j++){
-        result = await client.query({
+      for (let j = 0; j < data[i].participations.length; j++){
+        const result2 = await client.query({
           text: sql,
           values: [data[i].participations[j]],
         })
-        data[i].maraudes.push(result.rows[0])
+        data[i].maraudes.push(result2.rows[0])
       }
     }
     res.json(data)
@@ -193,7 +193,7 @@ router.delete('/admin/maraude/:id', async (req, res) => {
   if (req.session.admin === true){
     const deleteMaraude = req.params.id
     const sql = "DELETE FROM maraudes WHERE maraude_id=$1"
-    const result = await client.query({
+    await client.query({
       text: sql,
       values: [deleteMaraude]
     })
@@ -205,15 +205,15 @@ router.delete('/admin/maraude/:id', async (req, res) => {
 })
 
 router.get('/admin/maraudesUtilisateurs', async (req, res) =>{
-  if (req.session.admin === true){    
-    var result = await client.query({text: "SELECT * FROM maraudes\nORDER BY annee, mois, jour"})
-    for(var i = 0; i < result.rowCount; i++){
-      for(var j = 0; j < result.rows[i].participants.length; j++){
+  if (req.session.admin === true){
+    const result = await client.query({text: "SELECT * FROM maraudes\nORDER BY annee, mois, jour"});
+    for(let i = 0; i < result.rowCount; i++){
+      for(let j = 0; j < result.rows[i].participants.length; j++){
         const sql = "SELECT id, nom, prenom, email, telephone FROM participants WHERE id = $1"
-        var result2 = await client.query({
+        const result2 = await client.query({
           text: sql,
           values: [result.rows[i].participants[j]]
-        })
+        });
         result.rows[i].participants[j] = result2.rows[0]
       }
     }
@@ -241,33 +241,32 @@ router.post('/admin/trajet', async (req, res) => {
 })
 
 router.post('/admin/doleance', async (req, res) =>{
-  if (req.session.admin === true){
-    objet = req.body.objet,
-    description = req.body.description,
-    lieu = req.body.lieu,
-    trajet = req.body.trajet
+  if (req.session.admin === true) {
+    const objet = req.body.objet
+    const description = req.body.description
+    const lieu = req.body.lieu
+    const trajet = req.body.trajet
 
-    if (lieu == null){
+    if (lieu == null) {
       res.json({message: "Une position est necessaire."})
       return
     }
-    const sql = "INSERT INTO doleances (objet, description, lieu, trajet_associe) VALUES ($1, $2, $3, $4)"
+    const sql = "INSERT INTO doleances (objet, description, lieu, trajet_associe, visible) VALUES ($1, $2, $3, $4, $5)"
     await client.query({
       text: sql,
-      values: [objet, description, lieu, trajet],
+      values: [objet, description, lieu, trajet, true],
     })
     res.json({message: "Doleance enregistrée."})
     return
   }
   res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
-  
 })
 
 router.delete('/admin/doleance/:id', async (req, res) =>{
   if (req.session.admin === true){
     const doleance = req.params.id
     const sql = "DELETE FROM doleances WHERE id=$1"
-    const result = await client.query({
+    await client.query({
       text: sql,
       values: [doleance]
     })
@@ -285,7 +284,6 @@ router.get('/maraudes', async (req, res) => {
   //TODO changer requete pour pas afficher anciennes maraudes
   const result = await client.query({text: "SELECT * FROM maraudes\nORDER BY annee, mois, jour"})
   res.json(result.rows)
-  return
 })
 
 router.get('/maraudesTrajets', async(req, res) => {
@@ -306,14 +304,13 @@ router.get('/maraude/:id', async (req,res) => {
 router.get('/trajets', async (req, res) => {
   const result = await client.query({text: "SELECT * FROM trajets"})
   res.json(result.rows)
-  return
 })
 
 router.post('/email', async (req, res) => {
   const maraudeId = req.body.id
   const placesRestantes = await isFull(maraudeId)
 
-  if(placesRestantes == false){
+  if(placesRestantes === false){
     res.json({message: "Limite de participants atteinte."})
     return
   }
@@ -336,8 +333,8 @@ router.post('/email', async (req, res) => {
   })
 
   for(var i = 0; i < result.rows[0].participations.length; i++){
-    if(result.rows[0].participations[i] == maraudeId){
-      res.json({connu: true, message: "Participant déja inscrit."})
+    if(result.rows[0].participations[i] === maraudeId){
+      res.json({connu: true, message: "Participant déjà inscrit."})
       return
     }
   }
@@ -356,7 +353,7 @@ router.post('/participant', async (req, res) => {
   
   const placesRestantes = await isFull(maraudeId)
 
-  if(placesRestantes == false){
+  if(placesRestantes === false){
     res.json({message: "Limite de participants atteinte."})
     return
   }
@@ -400,10 +397,8 @@ async function isFull(maraudeId){
     text: sql,
     values: [maraudeId],
   })
-  if(result.rows[0].nombre_participants <= result.rows[0].nombre_volontaires){
-    return false
-  }
-  return true
+  return result.rows[0].nombre_participants > result.rows[0].nombre_volontaires;
+
 }
 
 async function getIdParticipant(email){
@@ -418,26 +413,21 @@ async function getIdParticipant(email){
   return result.rows[0].id
 }
 
-router.get('/doleances', async (req, res)=> {
-  const result = await client.query({text: "SELECT doleances.id, doleances.lieu, doleances.coordonnees, doleances.objet, doleances.description, trajets.nom_trajet FROM doleances, trajets WHERE (trajets.trajet_id = doleances.trajet_associe)"})
+router.get('/doleances', async (req, res) => {
+  const result = await client.query({text: "SELECT doleances.id, doleances.lieu, doleances.coordonnees, doleances.objet, doleances.description, doleances.visible, trajets.nom_trajet FROM doleances, trajets WHERE (trajets.trajet_id = doleances.trajet_associe)"})
   res.json(result.rows)
-  return
 })
 
 router.get('/doleance/trajet/:id', async (req, res) => {
   const trajet_id = req.params.id
-  console.log({id: trajet_id})
-  const sql = "SELECT * FROM doleances WHERE trajet_associe = $1"
+  const sql = "SELECT * FROM doleances WHERE trajet_associe = $1 AND visible = true"
   const result = await client.query(({
     text: sql,
     values: [trajet_id]
   }))
-  console.log({result: result})
-  if(result.rowCount == 0){
+  if(result.rowCount === 0){
     res.json(null)
-    console.log("Inside if")
     return
   }
-  console.log("Outside if")
   res.json(result.rows)
 })

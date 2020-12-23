@@ -52,10 +52,11 @@
     <div v-if="doleances != null">
       <h3>Doléances associées</h3>
       <div v-for="doleance in doleances" :key="doleance.id">
-      <p>{{doleance.objet}}</p>
-      <p>{{doleance.description}}</p>
-      <p>{{doleance.nom_trajet}}</p>
-      <p>{{doleance.lieu}}</p>
+        <input type="checkbox" v-model="doleance.checked">
+        <p>{{doleance.objet}}</p>
+        <p>{{doleance.description}}</p>
+        <p>{{doleance.nom_trajet}}</p>
+        <p>{{doleance.lieu}}</p>
       </div>
     </div>
 
@@ -78,7 +79,6 @@
   </div>
 </template>
 
-
 <script>
 module.exports = {
   data () {
@@ -98,9 +98,11 @@ module.exports = {
     const result1 = await axios.get('/api/maraude/' + maraudeId)
     this.maraude = result1.data[0]
     const result2 = await axios.get('/api/doleance/trajet/' + this.maraude.trajet_id)
-    console.log("After axios")
-    this.doleances = result2.data
-    console.log({resultDoleances: this.doleances})
+    var doleances = result2.data
+    for(var i = 0; i < doleances.length; i++){
+      doleances.checked = false
+    }
+    this.doleances = doleances
   },
 
   methods: {
