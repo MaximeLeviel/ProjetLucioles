@@ -155,10 +155,10 @@ router.post('/admin/maraude', async (req, res) => {
     const nbParticipants = req.body.nbParticipants
     const nom = req.body.nom
     
-    const sql = "INSERT INTO maraudes (jour, mois, annee, heure, type, nombre_participants, nombre_volontaires, nom_maraude, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)"
+    const sql = "INSERT INTO maraudes (jour, mois, annee, heure, type, nombre_participants, nombre_volontaires, nom_maraude, participants, objets) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)"
     await client.query({
       text: sql,
-      values: [jour, mois, annee, heure, trajet, nbParticipants, 0, nom, "{}"]
+      values: [jour, mois, annee, heure, trajet, nbParticipants, 0, nom, "{}", "{}"]
     })
     res.json({message: "Maraude créé."})
     return
@@ -339,12 +339,13 @@ router.post('/email', async (req, res) => {
     }
   }
 
-  sql = "UPDATE participants SET nombre_participations = nombre_participations + 1, participations = array_append(participations, $1) WHERE email = $2"
+  const objets = req.body.objets
+  sql = "UPDATE participants SET nombre_participations = nombre_participations + 1, participations = array_append(participations, $1), nombre_objets = nombre_objets + $2, objets = array_cat(objets, $3) WHERE email = $4"
   await client.query({
     text: sql,
-    values: [maraudeId, email]
+    values: [maraudeId, objets.length, objets, email]
   })
-  await inscriptionMaraude(participantID, maraudeId)
+  await inscriptionMaraude(participantID, maraudeId, objets)
   res.json({connu: true, message: "Participant inscrit."})
 })
 
@@ -372,23 +373,31 @@ router.post('/participant', async (req, res) => {
   const nom = req.body.nom
   const prenom = req.body.prenom
   const telephone = req.body.phone
-  sql = "INSERT INTO participants (nom, prenom, email, telephone, participations, nombre_participations) VALUES ($1, $2, $3, $4, $5, $6)"
+  const objets = req.body.objets
+  sql = "INSERT INTO participants (nom, prenom, email, telephone, participations, nombre_participations, nombre_objets, objets) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
   await client.query({
     text: sql,
-    values: [nom, prenom, email, telephone, "{"+maraudeId+"}", 1]
+    values: [nom, prenom, email, telephone, "{"+maraudeId+"}", 1, objets.length, objets]
   })
 
   const participantID = await getIdParticipant(email)
-  await inscriptionMaraude(participantID, maraudeId)
+  await inscriptionMaraude(participantID, maraudeId, objets)
   res.json({message: "Participant enregistré et inscrit"})
 })
 
-async function inscriptionMaraude(participantId, maraudeId){  
-  sql = "UPDATE maraudes SET nombre_volontaires = nombre_volontaires + 1, participants = array_append(participants, $1) WHERE maraude_id = $2"
+async function inscriptionMaraude(participantId, maraudeId, objets){
+  const sql = "UPDATE maraudes SET nombre_volontaires = nombre_volontaires + 1, participants = array_append(participants, $1), objets = array_cat(objets, $2) WHERE maraude_id = $3"
   await client.query({
     text: sql,
-    values: [participantId, maraudeId]
+    values: [participantId, objets, maraudeId]
   })
+  const sql2 = "UPDATE doleances SET visible = FALSE WHERE id = $1"
+  for (let i = 0; i < objets.length; i++){
+    await client.query({
+      text: sql2,
+      values: [objets[i]]
+    })
+  }
 }
 
 async function isFull(maraudeId){

@@ -80,6 +80,7 @@
 </template>
 
 <script>
+
 module.exports = {
   data () {
     return {
@@ -98,21 +99,24 @@ module.exports = {
     const result1 = await axios.get('/api/maraude/' + maraudeId)
     this.maraude = result1.data[0]
     const result2 = await axios.get('/api/doleance/trajet/' + this.maraude.trajet_id)
-    var doleances = result2.data
-    for(var i = 0; i < doleances.length; i++){
-      doleances.checked = false
+    if(result2.data !== null){
+      for(let i = 0; i < result2.data.length; i++){
+        result2.data[i].checked = false
+      }
     }
-    this.doleances = doleances
+    this.doleances = result2.data
   },
 
   methods: {
     placesRestantes(placesPrises, placesTotales){
         return placesTotales - placesPrises
     },
+
     async verifierEmail(){
       const inscription = {
         email: this.email,
-        id: this.maraude.maraude_id
+        id: this.maraude.maraude_id,
+        objets: this.selectedDoleances(),
       }
       const result = await axios.post('/api/email', inscription)
       if (result.data.connu === false){
@@ -122,17 +126,31 @@ module.exports = {
         alert(result.data.message)
       }
     },
-    async inscrireUser(){
+
+    async inscrireUser() {
       const inscription = {
         email: this.email,
         nom: this.nom,
         prenom: this.prenom,
         phone: this.phone,
         id: this.maraude.maraude_id,
+        objets: this.selectedDoleances(),
       }
       const result = await axios.post('/api/participant', inscription)
       alert(result.data.message)
-    }
+    },
+
+    selectedDoleances(){
+      const data = [];
+      if(this.doleances !== null){
+        for(let i = 0; i < this.doleances.length; i++){
+          if(this.doleances[i].checked === true){
+            data.push(this.doleances[i].id)
+          }
+        }
+      }
+      return data
+    },
   }
 }
 </script>
