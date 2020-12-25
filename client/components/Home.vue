@@ -1,58 +1,37 @@
 <template>
   <div>
-      <div class="presentation-lucioles">
-        <div class="container">
-          <div class="flex_column">
-            <h1>Présentation des Lucioles</h1>
-            <hr class="prez-lucioles">
-            <p>Lors de nos balades, nos essaims de lucioles visitent les personnes SDF dans une tournée de rue sous forme de « visite à domicile ».
-            Equipées de thermos, de vêtements, de denrées et surtout d’entrain, les lucioles apportent un peu de chaleur dans les cœurs et de la lumière dans l’obscurité.</p>
+    <div class="presentation-lucioles">
+      <div class="container">
+        <div class="flex_column">
+          <h1>Présentation des Lucioles</h1>
+          <hr class="prez-lucioles">
+          <p>Lors de nos balades, nos essaims de lucioles visitent les personnes SDF dans une tournée de rue sous forme de « visite à domicile ».
+          Equipées de thermos, de vêtements, de denrées et surtout d’entrain, les lucioles apportent un peu de chaleur dans les cœurs et de la lumière dans l’obscurité.</p>
 
-            <p>Communiquer, partager, écouter, s’intéresser autour d’une boisson chaude, sont les valeurs d’une bonne balade des lucioles.</p>
-          
-            <p>Les balades de rue sont un moyen de lutter contre la solitude des personnes SDF, qui souffrent de leur exclusion.
-              Les lucioles deviennent le lien qui les raccroche encore à la société.</p>
+          <p>Communiquer, partager, écouter, s’intéresser autour d’une boisson chaude, sont les valeurs d’une bonne balade des lucioles.</p>
+        
+          <p>Les balades de rue sont un moyen de lutter contre la solitude des personnes SDF, qui souffrent de leur exclusion.
+            Les lucioles deviennent le lien qui les raccroche encore à la société.</p>
 
-            <p>Venez-nous rejoindre lors de nos balades ! Suivez-nous sur nos réseaux sociaux pour vous tenir informé de tous les événements !</p>
+          <p>Venez-nous rejoindre lors de nos balades ! Suivez-nous sur nos réseaux sociaux pour vous tenir informé de tous les événements !</p>
 
-            <a href="https://labaladedeslucioles.org/" target=_blank><button class="info-lucioles">Plus d'informations</button></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="presentation-equipe">
-        <h1>Présentation de l'équipe</h1>
-        <hr>
-
-        <div class="row">
-          <div class="column">
-            <div class="polaroids">
-              <div class="a" title="Lisa Gaillard">
-                <img src="img/lisa.jpg" alt="Lisa Gaillard"/>
-                <a href="https://www.linkedin.com/in/lisa-gaillard-2a30b3176/" target=_blank><button class="contact-button">Contact</button></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="column">
-            <div class="polaroids">
-              <div class="a" title="Maxime Leviel">
-                <img src="img/maxime.jpg" alt="Maxime Leviel"/>
-                <a href="https://www.linkedin.com/in/maxime-leviel-691415176/" target=_blank><button class="contact-button">Contact</button></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="column">
-            <div class="polaroids">
-              <div class="a" title="Chloé Stéphan">
-                <img src="img/chloe.jpg" alt="Chloé Stéphan"/>
-                <a href="https://www.linkedin.com/in/chloestephan/" target=_blank><button class="contact-button">Contact</button></a>
-              </div>
-          </div>
+          <a href="https://labaladedeslucioles.org/" target=_blank><button class="info-lucioles">Plus d'informations</button></a>
         </div>
       </div>
     </div>
+
+    <div class="presentation-equipe">
+      <div class="container">
+        <div class="flex_column">
+          <h1>Présentation de l'équipe</h1>
+          <hr>
+          <p>Nous sommes quatre étudiants en 1ère année du cycle ingénieur d'EFREI Paris : Romy, Lisa, Maxime et Chloé. Nous avons pris contact avec La Balade des Lucioles en Septembre 2020 afin de leur proposer notre aide.</p>
+          <p>Ainsi, nous avons pu mettre en place ce site afin d'aider l'organisation et la mise en place des maraudes. Ce site a été réalisé au sein d'un projet pour nos études : "Le numérique au service de la société".</p>
+          <p>Nous espérons répondre à ce thème via ce travail afin d'aider, à notre manière, les personnes SDF et les personnes qui les aident au sein de La Balade des Lucioles.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template> 
 

@@ -25,10 +25,9 @@
             <div v-for="doleance in doleances" :key="doleance.id" class="doleance">
                 <h3>{{doleance.objet}} </h3>
                 <p><span>Description :</span> {{doleance.description}} </p>
-                <p><span>Trajet associé :</span> 
-                    <span v-if="doleance.nom_trajet != null">{{doleance.nom_trajet}}</span>
-                    <span v-else>Hors des trajets classiques</span>
-                </p>
+                <p><span>Trajet associé :</span>
+                <p v-if="doleance.nom_trajet != null">{{doleance.nom_trajet}}</p>
+                <p v-else>Hors des trajets classiques</p>
                 <p class="delete" @click="deleteDoleance(doleance)">Supprimer la doléance</p>
             </div>
         </div>
@@ -191,5 +190,6 @@ module.exports = {
     
     .delete:hover{
         cursor: pointer;
+        text-decoration: underline;
     }
 </style>

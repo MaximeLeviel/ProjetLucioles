@@ -2,14 +2,14 @@
   <div class="main">
     <h2>Cliquez sur une maraude pour vous inscrire !</h2>
     <hr>
-    <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
+    <div class="maraude" v-for="maraude in maraudes" :key="maraude.maraude_id">
       <div v-if="placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants) == 0">
         <h3>{{maraude.nom_maraude}}</h3>
           <p>Date: {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} </p>
           <p>Heure: {{maraude.heure}}</p>
           <p>Lieu de départ: {{maraude.depart}}</p>
           <p>Lieu d'arrivée: {{maraude.arrivee}}</p>
-          <p>Nombre de places disponibles: {{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}} </p>
+          <p>Plus de place disponible.</p>
       </div>
       <div v-else>
         <router-link :to="chemin(maraude)">
@@ -56,6 +56,10 @@ module.exports = {
 
 <style scoped>
 
+a {
+  text-decoration: none;
+}
+
 .main {
   padding-top: 30px;
   padding-bottom: 20px;
@@ -75,7 +79,7 @@ module.exports = {
   padding-bottom: 20px;
   padding-left: 50px;
   padding-right: 50px;
-  text-decoration: none;
+  text-decoration: none!important;
 }
 
 .maraude p {
@@ -85,6 +89,7 @@ module.exports = {
   text-decoration-thickness: 0px;
   border-bottom: 0px solid #fff;
   margin-bottom: 5px;
+  text-decoration: none!important;
 }
 
 h3 {
