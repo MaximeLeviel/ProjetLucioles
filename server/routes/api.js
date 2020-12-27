@@ -262,6 +262,31 @@ router.post('/admin/doleance', async (req, res) =>{
   res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
 })
 
+router.put('/admin/doleance', async (req, res) =>{
+  if (req.session.admin === true){
+    const doleanceId = req.body.id
+    const objet = req.body.objet
+    const description = req.body.description
+    const lieu = req.body.lieu
+    const trajet = req.body.trajet_associe
+    const visible = req.body.visible
+
+    if (lieu == null) {
+      res.json({message: "Une position est necessaire."})
+      return
+    }
+    const sql = "UPDATE doleances\nSET objet=$1, description=$2, lieu=$3, trajet_associe=$4, visible=$5 WHERE id=$6"
+    await client.query({
+      text: sql,
+      values: [objet, description, lieu, trajet, visible, doleanceId]
+    })
+
+    res.json({message: "Doleance modifiée."})
+    return
+  }
+  res.status(400).json({message: "L'utilisateur n'a pas les droits administrateurs."})
+})
+
 router.delete('/admin/doleance/:id', async (req, res) =>{
   if (req.session.admin === true){
     const doleance = req.params.id
@@ -423,7 +448,7 @@ async function getIdParticipant(email){
 }
 
 router.get('/doleances', async (req, res) => {
-  const result = await client.query({text: "SELECT doleances.id, doleances.lieu, doleances.coordonnees, doleances.objet, doleances.description, doleances.visible, trajets.nom_trajet FROM doleances, trajets WHERE (trajets.trajet_id = doleances.trajet_associe)"})
+  const result = await client.query({text: "SELECT doleances.id, doleances.lieu, doleances.coordonnees, doleances.objet, doleances.description, doleances.visible, doleances.trajet_associe, trajets.nom_trajet FROM doleances, trajets WHERE (trajets.trajet_id = doleances.trajet_associe)"})
   res.json(result.rows)
 })
 
