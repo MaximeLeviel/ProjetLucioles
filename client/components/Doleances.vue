@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <h2>Cliquez sur une doléance pour vous signaler que vous l'apportez !</h2>
+    <h2>Cliquez sur une doléance pour signaler que vous l'apportez !</h2>
     <hr>
     <div v-for="doleance in doleances" :key="doleance.id" class="doleance">
       <h3>{{doleance.objet}}</h3>
