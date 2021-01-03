@@ -18,7 +18,6 @@
             <button type="submit">Ajouter</button>
           </form>
         </div>
-            <hr>
       </div>
       <div class="column-2">
         <h2>Liste des doléances</h2>
