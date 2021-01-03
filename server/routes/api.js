@@ -213,10 +213,19 @@ router.get('/admin/maraudesUtilisateurs', async (req, res) =>{
         const result2 = await client.query({
           text: sql,
           values: [result.rows[i].participants[j]]
-        });
+        })
         result.rows[i].participants[j] = result2.rows[0]
       }
+      for(let j = 0; j< result.rows[i].objets.length; j++){
+        const sql = "SELECT * FROM doleances WHERE id = $1"
+        const result2 = await client.query({
+          text: sql,
+          values: [result.rows[i].objets[j]]
+        })
+        result.rows[i].objets[j] = result2.rows[0]
+      }
     }
+    console.log({result: result.rows})
     res.json(result.rows)
     return
   }

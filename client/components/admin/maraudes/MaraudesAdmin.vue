@@ -1,20 +1,30 @@
 <template>
   <div>
-      <h2>Maraudes</h2>
-      <hr>
+    <h2>Maraudes</h2>
+    <hr>
 
     <div v-for="maraude in maraudes" :key="maraude.maraude_id" class="maraude">
-        <h3><span>{{maraude.nom_maraude}}</span></h3>
-        <p>Date : {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} {{maraude.heure}} </p>
-        <p>Participants : {{maraude.nombre_volontaires}}/{{maraude.nombre_participants}} </p>
-        <ul>
-            <li v-for="(participant, index) in maraude.participants" :key="index" >
-                <p v-if="participant != null">{{participant.nom}} {{participant.prenom}}<br>Contact: {{participant.email}}, {{participant.telephone}}</p> 
-                <p v-else>Utilisateur supprimé.</p>
-            </li>
-        </ul>
-        <button class="change"><p><router-link :to="changer(maraude.maraude_id)">Modifier cette maraude</router-link></p></button>
-        <button class="delete"><p @click="deleteMaraude(maraude)">Supprimer cette maraude</p></button>
+      <h3><span>{{maraude.nom_maraude}}</span></h3>
+      <p>Date : {{maraude.jour}}/{{maraude.mois}}/{{maraude.annee}} {{maraude.heure}} </p>
+      <p>Participants : {{maraude.nombre_volontaires}}/{{maraude.nombre_participants}} </p>
+      <ul>
+        <li v-for="participant in maraude.participants" :key="participant.id" >
+          <p v-if="participant != null">{{participant.nom}} {{participant.prenom}}<br>Contact: {{participant.email}}, {{participant.telephone}}</p>
+          <p v-else>Utilisateur supprimé.</p>
+        </li>
+      </ul>
+      <div v-if="maraude.objets.length > 0">
+        <p>Doléances ramenée : </p>
+        <li v-for="doleance in maraude.objets" :key="doleance.id">
+          <p v-if="doleance != null">{{doleance.objet}}<br>{{doleance.description}}</p>
+          <p v-else>Doléance supprimé.</p>
+        </li>
+      </div>
+      <div v-else>
+        <p>Doléances ramenée : Pas de doléance</p>
+      </div>
+      <button class="change"><p><router-link :to="changer(maraude.maraude_id)">Modifier cette maraude</router-link></p></button>
+      <button class="delete"><p @click="deleteMaraude(maraude)">Supprimer cette maraude</p></button>
     </div>
   </div>
 </template>
