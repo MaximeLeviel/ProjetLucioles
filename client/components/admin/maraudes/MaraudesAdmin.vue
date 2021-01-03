@@ -13,16 +13,20 @@
           <p v-else>Utilisateur supprimé.</p>
         </li>
       </ul>
-      <div v-if="maraude.objets.length > 0">
-        <p>Doléances ramenée : </p>
-        <li v-for="doleance in maraude.objets" :key="doleance.id">
-          <p v-if="doleance != null">{{doleance.objet}}<br>{{doleance.description}}</p>
-          <p v-else>Doléance supprimé.</p>
-        </li>
-      </div>
-      <div v-else>
-        <p>Doléances ramenée : Pas de doléance</p>
-      </div>
+
+      <ul>
+        <div v-if="maraude.objets.length > 0">
+    
+            <p><br><br>Doléances ramenées :</p>
+            <li v-for="doleance in maraude.objets" :key="doleance.id">
+            <p v-if="doleance != null">{{doleance.objet}}<br>{{doleance.description}}</p>
+            <p v-else>Doléance supprimée.</p>
+            </li>
+        </div>
+        <div v-else>
+            <p><br><br>Doléances ramenées : Pas de doléance</p>
+        </div>
+      </ul>
       <button class="change"><p><router-link :to="changer(maraude.maraude_id)">Modifier cette maraude</router-link></p></button>
       <button class="delete"><p @click="deleteMaraude(maraude)">Supprimer cette maraude</p></button>
     </div>
