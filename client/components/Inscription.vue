@@ -42,23 +42,42 @@
               <div class="cell" data-title="Places restantes">
                 <p>{{placesRestantes(maraude.nombre_volontaires, maraude.nombre_participants)}}/{{maraude.nombre_participants}}</p>
               </div>
-
             </div>
           </div>
         </div>
       </div>
     </div>
     
-    <div v-if="doleances != null">
-      <h3>Doléances associées</h3>
-      <div v-for="doleance in doleances" :key="doleance.id">
-        <input type="checkbox" v-model="doleance.checked">
-        <p>{{doleance.objet}}</p>
-        <p>{{doleance.description}}</p>
-        <p>{{doleance.nom_trajet}}</p>
-        <p>{{doleance.lieu}}</p>
+
+
+    <div v-if="doleances != null"> 
+      <h2 style="margin-top: 30px;">Doléances associées</h2>
+      <hr>
+    
+      <div class="limiter">
+        <div class="container-table">
+          <div class="wrap-table">
+            <table class="table">
+              <tr class="row header">
+                <th class="cell">Titre</th>
+                <th class="cell">Description</th> 
+                <th class="cell">Lieu</th>
+                <th class="cell">Je peux amener...</th>
+              </tr>
+
+              <tr v-for="doleance in doleances" :key="doleance.id" class="row">
+                <td class="cell">{{doleance.objet}}</td>
+                <td class="cell">{{doleance.description}}</td>
+                <td class="cell">{{doleance.lieu}}</td>
+                <td class="cell"><input type="checkbox" class="checkbox" v-model="doleance.checked"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
+
+    <hr>
 
     <form @submit.prevent="verifierEmail" v-if="isUserConnu">
         <h3>Entrez votre email pour vous inscrire</h3>
@@ -105,6 +124,7 @@ module.exports = {
       }
     }
     this.doleances = result2.data
+    console.log({doleances: this.doleances})
   },
 
   methods: {
@@ -226,6 +246,11 @@ hr {
 .row.header {
   color: #ffffff;
   background: #006ba1;
+}
+
+table, th, td {
+  border: 0px solid;
+  border-collapse: collapse;
 }
 
 @media screen and (max-width: 768px) {
