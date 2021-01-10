@@ -18,7 +18,7 @@
         <div v-if="maraude.objets.length > 0">
     
             <p><br><br>Doléances ramenées :</p>
-            <li v-for="doleance in maraude.objets" :key="doleance.id">
+            <li v-for="(doleance, index) in maraude.objets" :key="index">
             <p v-if="doleance != null">{{doleance.objet}}<br>{{doleance.description}}</p>
             <p v-else>Doléance supprimée.</p>
             </li>
