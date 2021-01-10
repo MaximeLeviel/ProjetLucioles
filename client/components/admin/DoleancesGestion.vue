@@ -4,7 +4,7 @@
       <div class="column-1">
         <h2>Ajouter une doléance</h2>
         <hr>
-        <div>
+        <div style="margin-bottom: 20px;">
           <form @submit.prevent="creerDoleance">
             <input type="text" v-model="objet" placeholder="Titre" required>
             <input type="textarea" v-model="description" placeholder="Decrivez le besoin et la personne " required>
